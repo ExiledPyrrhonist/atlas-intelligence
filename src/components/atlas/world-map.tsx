@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { geoNaturalEarth1, geoPath } from "d3-geo";
 import { select } from "d3-selection";
+import "d3-transition";
 import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior } from "d3-zoom";
 import { feature } from "topojson-client";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
