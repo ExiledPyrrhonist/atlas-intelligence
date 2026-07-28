@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CountriesIndexRouteImport } from './routes/countries.index'
+import { Route as CountriesIsoRouteImport } from './routes/countries.$iso'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
@@ -28,34 +29,43 @@ const CountriesIndexRoute = CountriesIndexRouteImport.update({
   path: '/countries/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CountriesIsoRoute = CountriesIsoRouteImport.update({
+  id: '/countries/$iso',
+  path: '/countries/$iso',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/countries/$iso': typeof CountriesIsoRoute
   '/countries/': typeof CountriesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/countries/$iso': typeof CountriesIsoRoute
   '/countries': typeof CountriesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/countries/$iso': typeof CountriesIsoRoute
   '/countries/': typeof CountriesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/countries/'
+  fullPaths: '/' | '/dashboard' | '/countries/$iso' | '/countries/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/countries'
-  id: '__root__' | '/' | '/dashboard' | '/countries/'
+  to: '/' | '/dashboard' | '/countries/$iso' | '/countries'
+  id: '__root__' | '/' | '/dashboard' | '/countries/$iso' | '/countries/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  CountriesIsoRoute: typeof CountriesIsoRoute
   CountriesIndexRoute: typeof CountriesIndexRoute
 }
 
@@ -82,12 +92,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CountriesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/countries/$iso': {
+      id: '/countries/$iso'
+      path: '/countries/$iso'
+      fullPath: '/countries/$iso'
+      preLoaderRoute: typeof CountriesIsoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  CountriesIsoRoute: CountriesIsoRoute,
   CountriesIndexRoute: CountriesIndexRoute,
 }
 export const routeTree = rootRouteImport
