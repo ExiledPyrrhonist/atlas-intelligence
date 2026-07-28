@@ -1,0 +1,129 @@
+import { cn } from "@/lib/utils";
+import { importanceClass, confidenceClass } from "@/lib/atlas";
+
+function Chip({ className, children }: { className?: string; children: React.ReactNode }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1 rounded-sm border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em]",
+        className,
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+export function ImportanceBadge({ level }: { level: string }) {
+  return <Chip className={importanceClass(level)}>{level}</Chip>;
+}
+
+export function ConfidenceBadge({ level }: { level: string }) {
+  return <Chip className={confidenceClass(level)}>{level}</Chip>;
+}
+
+export function MetaChip({ children }: { children: React.ReactNode }) {
+  return <Chip className="border-border bg-secondary text-muted-foreground">{children}</Chip>;
+}
+
+export function TagList({ tags }: { tags: string[] }) {
+  if (!tags?.length) return null;
+  return (
+    <div className="flex flex-wrap gap-1">
+      {tags.map((t) => (
+        <span
+          key={t}
+          className="rounded-sm border border-border bg-secondary px-1.5 py-0.5 text-[11px] text-muted-foreground"
+        >
+          #{t}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+export function Field({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div className="border-b border-border/60 py-2 last:border-0">
+      <div className="label-hud">{label}</div>
+      <div className="mt-1 text-sm text-foreground">{value || "—"}</div>
+    </div>
+  );
+}
+
+export function SectionTitle({
+  title,
+  count,
+  action,
+}: {
+  title: string;
+  count?: number;
+  action?: React.ReactNode;
+}) {
+  return (
+    <div className="mb-3 flex items-center justify-between gap-3 border-b border-border pb-2">
+      <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
+        {title}
+        {typeof count === "number" && (
+          <span className="ml-2 text-muted-foreground">[{count}]</span>
+        )}
+      </h2>
+      {action}
+    </div>
+  );
+}
+
+export function ListBlock({ items }: { items: string[] }) {
+  if (!items?.length) return <p className="text-sm text-muted-foreground">No records.</p>;
+  return (
+    <ul className="space-y-1.5">
+      {items.map((item) => (
+        <li key={item} className="flex gap-2 text-sm text-foreground/90">
+          <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function WhyThisMatters({ text }: { text: string }) {
+  if (!text) return null;
+  return (
+    <div className="rounded-md border border-signal/35 bg-signal/8 p-4">
+      <div className="label-hud text-signal">Why this matters</div>
+      <p className="mt-2 text-sm leading-relaxed text-foreground/90">{text}</p>
+    </div>
+  );
+}
+
+export function RatingBar({
+  label,
+  value,
+  max = 10,
+  suffix,
+}: {
+  label: string;
+  value: number;
+  max?: number;
+  suffix?: string;
+}) {
+  const pct = Math.max(0, Math.min(100, (value / max) * 100));
+  return (
+    <div>
+      <div className="flex items-baseline justify-between">
+        <span className="label-hud">{label}</span>
+        <span className="font-mono text-sm text-foreground">
+          {value}
+          {suffix ?? `/${max}`}
+        </span>
+      </div>
+      <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+        <div
+          className="h-full rounded-full bg-primary transition-all"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  );
+}
