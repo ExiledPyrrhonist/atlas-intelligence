@@ -69,7 +69,7 @@ function CountryDossier() {
               {country.flag_emoji} {country.name}
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              {country.official_name} · Capital {country.capital}
+              {country.political_system} · Capital {country.capital}
             </p>
           </div>
           <div className="flex gap-1">
@@ -92,8 +92,8 @@ function CountryDossier() {
           <Field label="Head of government" value={country.head_of_government} />
           <Field label="Population" value={formatCompact(country.population)} />
           <Field label="GDP" value={formatMoney(Number(country.gdp_usd))} />
-          <Field label="GDP per capita" value={formatMoney(Number(country.gdp_per_capita))} />
-          <Field label="Military spending" value={formatMoney(Number(country.military_spending_usd))} />
+          <Field label="Political system" value={country.political_system} />
+          <Field label="Military posture" value={country.military_info} />
         </section>
 
         <section className="panel-surface space-y-4 p-4">
@@ -101,7 +101,7 @@ function CountryDossier() {
           <RatingBar label="Democracy index" value={Number(country.democracy_rating)} />
           <RatingBar label="Stability" value={country.stability_rating} />
           <RatingBar label="Corruption perception" value={country.corruption_rating} />
-          <RatingBar label="Global influence" value={country.influence_rating} />
+          
         </section>
 
         <section className="panel-surface p-4">
@@ -127,12 +127,12 @@ function CountryDossier() {
           <ListBlock items={country.current_conflicts} />
         </section>
         <section className="panel-surface p-4">
-          <SectionTitle title="Alliances" />
-          <ListBlock items={country.alliances} />
+          <SectionTitle title="Key allies" />
+          <ListBlock items={country.key_allies} />
         </section>
         <section className="panel-surface p-4">
-          <SectionTitle title="Strategic resources" />
-          <ListBlock items={country.strategic_resources} />
+          <SectionTitle title="Key rivals" />
+          <ListBlock items={country.key_rivals} />
         </section>
       </div>
 
@@ -147,7 +147,7 @@ function CountryDossier() {
               className="panel-surface p-3 hover:border-primary/50"
             >
               <div className="text-sm font-medium">{f.name}</div>
-              <div className="text-xs text-muted-foreground">{f.role}</div>
+              <div className="text-xs text-muted-foreground">{f.position}</div>
               <div className="mt-1 font-mono text-[11px] text-muted-foreground">
                 {f.ideology}
               </div>
@@ -194,7 +194,7 @@ function CountryDossier() {
             <tbody>
               {dossier?.statistics.map((s) => (
                 <tr key={s.id} className="border-t border-border/60">
-                  <td className="px-3 py-2">{s.metric}</td>
+                  <td className="px-3 py-2">{s.name}</td>
                   <td className="px-3 py-2 text-muted-foreground">{s.category}</td>
                   <td className="px-3 py-2 text-right font-mono">
                     {Number(s.value).toLocaleString()} {s.unit}
