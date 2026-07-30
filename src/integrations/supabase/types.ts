@@ -46,6 +46,9 @@ export type Database = {
           name: string
           political_issues: string[]
           political_system: string
+          political_violence_risk:
+            | Database["public"]["Enums"]["violence_risk"]
+            | null
           population: number
           region: string
           research_notes: string
@@ -86,6 +89,9 @@ export type Database = {
           name: string
           political_issues?: string[]
           political_system?: string
+          political_violence_risk?:
+            | Database["public"]["Enums"]["violence_risk"]
+            | null
           population?: number
           region?: string
           research_notes?: string
@@ -126,6 +132,9 @@ export type Database = {
           name?: string
           political_issues?: string[]
           political_system?: string
+          political_violence_risk?:
+            | Database["public"]["Enums"]["violence_risk"]
+            | null
           population?: number
           region?: string
           research_notes?: string
@@ -751,6 +760,7 @@ export type Database = {
         | "think_tank"
         | "database"
         | "book"
+      violence_risk: "low" | "moderate" | "high" | "severe"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -902,6 +912,7 @@ export const Constants = {
         "database",
         "book",
       ],
+      violence_risk: ["low", "moderate", "high", "severe"],
     },
   },
 } as const

@@ -19,6 +19,8 @@ import {
   RatingBar,
 } from "@/components/atlas/primitives";
 import { NotesPanel } from "@/components/atlas/notes-panel";
+import { riskFill } from "@/components/atlas/world-map";
+
 
 export const Route = createFileRoute("/countries/$iso")({
   head: ({ params }) => ({
@@ -72,10 +74,20 @@ function CountryDossier() {
               {country.political_system} · Capital {country.capital}
             </p>
           </div>
-          <div className="flex gap-1">
+          <div className="flex flex-wrap items-center gap-1">
+            <span className="inline-flex items-center gap-1.5 rounded border border-border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em]">
+              <span
+                className="inline-block h-2 w-2 rounded-sm"
+                style={{ background: riskFill(country.political_violence_risk) }}
+              />
+              {country.political_violence_risk
+                ? `violence: ${country.political_violence_risk}`
+                : "violence: no data"}
+            </span>
             <ImportanceBadge level={country.importance} />
             <ConfidenceBadge level={country.confidence} />
           </div>
+
         </div>
         <div className="mt-4">
           <TagList tags={country.tags} />

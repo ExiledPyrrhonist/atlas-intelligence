@@ -55,6 +55,9 @@ function MapPage() {
     [filtered],
   );
 
+  const focusIso = useMemo(() => new Set(filtered.map((c) => c.iso_a3)), [filtered]);
+  const filtersActive = region !== "all" || importance !== "all";
+
   return (
     <div className="flex h-[calc(100vh-3.25rem)] flex-col lg:flex-row">
       <div className="relative min-h-[55vh] flex-1">
@@ -63,11 +66,12 @@ function MapPage() {
             Global situation map
           </h1>
           <p className="mt-1 text-xs text-muted-foreground">
-            Scroll to zoom · drag to pan · click a highlighted state to open its dossier.
+            Scroll to zoom · drag to pan · click any country to open its intelligence profile.
           </p>
         </div>
-        <WorldMap countries={filtered} />
+        <WorldMap countries={countries} focusIso={filtersActive ? focusIso : undefined} />
       </div>
+
 
       <aside className="flex w-full shrink-0 flex-col border-t border-border bg-panel lg:w-80 lg:border-l lg:border-t-0">
         <div className="space-y-2 border-b border-border p-3">
