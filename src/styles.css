@@ -58,6 +58,13 @@
   --color-map-tracked: var(--map-tracked);
   --color-map-stroke: var(--map-stroke);
 
+  --color-risk-low: var(--risk-low);
+  --color-risk-moderate: var(--risk-moderate);
+  --color-risk-high: var(--risk-high);
+  --color-risk-severe: var(--risk-severe);
+  --color-risk-none: var(--risk-none);
+
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -119,6 +126,13 @@
   --map-land: oklch(0.29 0.014 246);
   --map-tracked: oklch(0.44 0.062 210);
   --map-stroke: oklch(0.38 0.02 246);
+
+  --risk-low: oklch(0.6 0.13 150);
+  --risk-moderate: oklch(0.79 0.135 92);
+  --risk-high: oklch(0.7 0.16 55);
+  --risk-severe: oklch(0.58 0.2 22);
+  --risk-none: oklch(0.34 0.008 246);
+
 
   --chart-1: oklch(0.75 0.12 196);
   --chart-2: oklch(0.79 0.145 78);

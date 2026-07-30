@@ -16,9 +16,34 @@ const LOW_RES = "/countries-110m.json";
 const HIGH_RES = "/countries-50m.json";
 const DETAIL_THRESHOLD = 2.6;
 
-function normalizeId(value: string | number | undefined): string {
-  if (value === undefined) return "";
+export const RISK_LEVELS = ["low", "moderate", "high", "severe"] as const;
+export type RiskLevel = (typeof RISK_LEVELS)[number];
+
+const RISK_FILL: Record<string, string> = {
+  low: "var(--risk-low)",
+  moderate: "var(--risk-moderate)",
+  high: "var(--risk-high)",
+  severe: "var(--risk-severe)",
+};
+
+export function riskFill(risk: string | null | undefined): string {
+  return (risk && RISK_FILL[risk]) || "var(--risk-none)";
+}
+
+export const RISK_LABEL: Record<string, string> = {
+  low: "Low / stable",
+  moderate: "Moderate / elevated",
+  high: "High",
+  severe: "Severe / active war",
+};
+
+function normalizeId(value: string | number | undefined | null): string {
+  if (value === undefined || value === null) return "";
   return String(value).replace(/^0+/, "");
+}
+
+function normalizeName(value: string | undefined): string {
+  return (value ?? "").trim().toLowerCase();
 }
 
 async function loadWorld(url: string): Promise<CountryFeature[]> {
@@ -31,26 +56,86 @@ async function loadWorld(url: string): Promise<CountryFeature[]> {
   return collection.features as CountryFeature[];
 }
 
-export function WorldMap({ countries }: { countries: Country[] }) {
+/** Map display names used by the atlas topology to ISO alpha-3 codes. */
+const NAME_ALIASES: Record<string, string> = {
+  kosovo: "XKX",
+  "n. cyprus": "CYP",
+  somaliland: "SOM",
+  "w. sahara": "ESH",
+  "united states of america": "USA",
+  "dem. rep. congo": "COD",
+  "central african rep.": "CAF",
+  "s. sudan": "SSD",
+  "eq. guinea": "GNQ",
+  "bosnia and herz.": "BIH",
+  "dominican rep.": "DOM",
+  "solomon is.": "SLB",
+  "falkland is.": "FLK",
+  "fr. s. antarctic lands": "ATF",
+};
+
+export function WorldMap({
+  countries,
+  focusIso,
+}: {
+  countries: Country[];
+  focusIso?: Set<string>;
+}) {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const zoomRef = useRef<ZoomBehavior<SVGSVGElement, unknown> | null>(null);
+  const pointerStart = useRef<{ x: number; y: number } | null>(null);
 
   const [size, setSize] = useState({ width: 960, height: 540 });
   const [features, setFeatures] = useState<CountryFeature[]>([]);
   const [detailLoaded, setDetailLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
   const [transform, setTransform] = useState({ k: 1, x: 0, y: 0 });
-  const [hovered, setHovered] = useState<{ id: string; name: string; x: number; y: number } | null>(
-    null,
-  );
+  const [selected, setSelected] = useState<string | null>(null);
+  const [hovered, setHovered] = useState<{
+    key: string;
+    name: string;
+    risk: string | null;
+    population: number | null;
+    tracked: boolean;
+    x: number;
+    y: number;
+  } | null>(null);
 
-  const trackedById = useMemo(() => {
+  const byNumeric = useMemo(() => {
     const map = new Map<string, Country>();
     countries.forEach((c) => map.set(normalizeId(c.iso_numeric), c));
     return map;
   }, [countries]);
+
+  const byIso3 = useMemo(() => {
+    const map = new Map<string, Country>();
+    countries.forEach((c) => map.set(c.iso_a3.toUpperCase(), c));
+    return map;
+  }, [countries]);
+
+  const byName = useMemo(() => {
+    const map = new Map<string, Country>();
+    countries.forEach((c) => map.set(normalizeName(c.name), c));
+    return map;
+  }, [countries]);
+
+  const resolveCountry = useCallback(
+    (f: CountryFeature): Country | undefined => {
+      const numeric = normalizeId(f.id);
+      const byNum = numeric ? byNumeric.get(numeric) : undefined;
+      if (byNum) return byNum;
+      const name = normalizeName(f.properties?.name);
+      const alias = NAME_ALIASES[name];
+      if (alias) {
+        const aliased = byIso3.get(alias);
+        if (aliased) return aliased;
+      }
+      return byName.get(name);
+    },
+    [byNumeric, byIso3, byName],
+  );
 
   useEffect(() => {
     let active = true;
@@ -131,34 +216,30 @@ export function WorldMap({ countries }: { countries: Country[] }) {
   }, []);
 
   const rendered = useMemo(() => {
-    return features.map((f) => {
-      const id = normalizeId(f.id);
+    return features.map((f, i) => {
+      const country = resolveCountry(f);
       return {
-        id,
-        name: f.properties?.name ?? "",
+        key: `${normalizeId(f.id) || "x"}-${f.properties?.name ?? i}`,
+        name: country?.name ?? f.properties?.name ?? "",
         d: path(f) ?? "",
         area: path.area(f),
         centroid: path.centroid(f),
-        country: trackedById.get(id),
+        country,
       };
     });
-  }, [features, path, trackedById]);
+  }, [features, path, resolveCountry]);
 
   const labels = useMemo(() => {
     const { k, x, y } = transform;
     const placed: { x0: number; y0: number; x1: number; y1: number }[] = [];
-    const out: { id: string; text: string; sx: number; sy: number; tracked: boolean }[] = [];
+    const out: { key: string; text: string; sx: number; sy: number; tracked: boolean }[] = [];
     const candidates = [...rendered]
       .filter((r) => r.name && Number.isFinite(r.centroid[0]))
-      .sort((a, b) => {
-        const bias = (r: (typeof rendered)[number]) => (r.country ? 1.9 : 1);
-        return b.area * bias(b) - a.area * bias(a);
-      });
+      .sort((a, b) => b.area - a.area);
 
     for (const r of candidates) {
       const screenArea = r.area * k * k;
-      const minArea = r.country ? 260 : 900;
-      if (screenArea < minArea) continue;
+      if (screenArea < 600) continue;
       const sx = r.centroid[0] * k + x;
       const sy = r.centroid[1] * k + y;
       if (sx < 40 || sy < 16 || sx > size.width - 40 || sy > size.height - 12) continue;
@@ -176,15 +257,22 @@ export function WorldMap({ countries }: { countries: Country[] }) {
       );
       if (collides) continue;
       placed.push(box);
-      out.push({ id: r.id, text: r.name, sx, sy, tracked: Boolean(r.country) });
+      out.push({
+        key: r.key,
+        text: r.name,
+        sx,
+        sy,
+        tracked: Boolean(r.country && (!focusIso || focusIso.has(r.country.iso_a3))),
+      });
       if (out.length > 90) break;
     }
     return out;
-  }, [rendered, transform, size]);
+  }, [rendered, transform, size, focusIso]);
 
-  const handleClick = (id: string) => {
-    const country = trackedById.get(id);
-    if (country) navigate({ to: "/countries/$iso", params: { iso: country.iso_a3 } });
+  const openCountry = (country: Country | undefined) => {
+    if (!country) return;
+    setSelected(country.iso_a3);
+    navigate({ to: "/countries/$iso", params: { iso: country.iso_a3 } });
   };
 
   return (
@@ -193,9 +281,9 @@ export function WorldMap({ countries }: { countries: Country[] }) {
         ref={svgRef}
         width={size.width}
         height={size.height}
-        className="block cursor-grab touch-none active:cursor-grabbing"
+        className="block touch-none"
         role="img"
-        aria-label="Interactive world map of tracked countries"
+        aria-label="Interactive world map coloured by political violence risk"
       >
         <defs>
           <pattern id="atlas-grid" width="42" height="42" patternUnits="userSpaceOnUse">
@@ -210,57 +298,75 @@ export function WorldMap({ countries }: { countries: Country[] }) {
             stroke="var(--map-stroke)"
             strokeWidth={1 / transform.k}
           />
-          {rendered.map((r) => (
-            <path
-              key={r.id + r.name}
-              d={r.d}
-              fill={r.country ? "var(--map-tracked)" : "var(--map-land)"}
-              stroke="var(--map-stroke)"
-              strokeWidth={0.5 / transform.k}
-              className={r.country ? "cursor-pointer transition-[fill]" : "transition-[fill]"}
-              style={
-                hovered?.id === r.id
-                  ? { fill: r.country ? "var(--primary)" : "var(--accent)" }
-                  : undefined
-              }
-              onMouseEnter={(e) =>
-                setHovered({
-                  id: r.id,
-                  name: r.country?.name ?? r.name,
-                  x: e.clientX,
-                  y: e.clientY,
-                })
-              }
-              onMouseMove={(e) =>
-                setHovered((h) => (h ? { ...h, x: e.clientX, y: e.clientY } : h))
-              }
-              onMouseLeave={() => setHovered(null)}
-              onClick={() => handleClick(r.id)}
-            />
-          ))}
-        </g>
-        <g pointerEvents="none">
-          {labels.map((l) => {
-            const fontSize = l.tracked ? 11 : 10;
+          {rendered.map((r) => {
+            const clickable = Boolean(r.country);
+            const isSelected = Boolean(r.country && selected === r.country.iso_a3);
+            const isHovered = hovered?.key === r.key;
+            const inFocus = Boolean(r.country && (!focusIso || focusIso.has(r.country.iso_a3)));
             return (
-              <text
-                key={l.id + l.text}
-                x={l.sx}
-                y={l.sy}
-                textAnchor="middle"
-                fontSize={fontSize}
-                fontFamily="var(--font-mono)"
-                letterSpacing="0.06em"
-                fill={l.tracked ? "var(--foreground)" : "var(--muted-foreground)"}
-                stroke="var(--map-ocean)"
-                strokeWidth={2.5}
-                paintOrder="stroke"
-                opacity={l.tracked ? 1 : 0.75}
-              >
-                {l.text}
-              </text>
+              <path
+                key={r.key}
+                d={r.d}
+                data-iso={r.country?.iso_a3 ?? undefined}
+                data-name={r.name}
+                fill={riskFill(r.country?.political_violence_risk)}
+                fillOpacity={inFocus ? (isHovered ? 1 : 0.9) : 0.35}
+                stroke={
+                  isSelected
+                    ? "var(--primary)"
+                    : isHovered
+                      ? "var(--foreground)"
+                      : "var(--map-stroke)"
+                }
+                strokeWidth={(isSelected ? 2 : isHovered ? 1.4 : 0.6) / transform.k}
+                className={clickable ? "cursor-pointer" : "cursor-default"}
+                onPointerDown={(e) => {
+                  pointerStart.current = { x: e.clientX, y: e.clientY };
+                }}
+                onMouseEnter={(e) =>
+                  setHovered({
+                    key: r.key,
+                    name: r.name,
+                    risk: r.country?.political_violence_risk ?? null,
+                    population: r.country?.population ?? null,
+                    tracked: clickable,
+                    x: e.clientX,
+                    y: e.clientY,
+                  })
+                }
+                onMouseMove={(e) =>
+                  setHovered((h) => (h ? { ...h, x: e.clientX, y: e.clientY } : h))
+                }
+                onMouseLeave={() => setHovered(null)}
+                onClick={(e) => {
+                  const start = pointerStart.current;
+                  pointerStart.current = null;
+                  if (start && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 4) return;
+                  openCountry(r.country);
+                }}
+              />
             );
           })}
+        </g>
+        <g pointerEvents="none">
+          {labels.map((l) => (
+            <text
+              key={l.key}
+              x={l.sx}
+              y={l.sy}
+              textAnchor="middle"
+              fontSize={l.tracked ? 11 : 10}
+              fontFamily="var(--font-mono)"
+              letterSpacing="0.06em"
+              fill={l.tracked ? "var(--foreground)" : "var(--muted-foreground)"}
+              stroke="var(--map-ocean)"
+              strokeWidth={2.5}
+              paintOrder="stroke"
+              opacity={l.tracked ? 1 : 0.7}
+            >
+              {l.text}
+            </text>
+          ))}
         </g>
       </svg>
 
@@ -276,13 +382,18 @@ export function WorldMap({ countries }: { countries: Country[] }) {
           style={{ left: hovered.x + 12, top: hovered.y - 8 }}
         >
           <div className="font-medium">{hovered.name}</div>
-          {trackedById.get(hovered.id) ? (
-            <div className="mt-0.5 font-mono text-[10px] text-primary">
-              TRACKED · POP {formatCompact(trackedById.get(hovered.id)!.population)} · CLICK TO OPEN
-            </div>
-          ) : (
-            <div className="mt-0.5 font-mono text-[10px] text-muted-foreground">NOT TRACKED</div>
-          )}
+          <div className="mt-0.5 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.1em]">
+            <span
+              className="inline-block h-2 w-2 rounded-sm"
+              style={{ background: riskFill(hovered.risk) }}
+            />
+            {hovered.risk ? RISK_LABEL[hovered.risk] : "No risk data"}
+          </div>
+          <div className="mt-0.5 font-mono text-[10px] text-muted-foreground">
+            {hovered.tracked
+              ? `${hovered.population ? `POP ${formatCompact(hovered.population)} · ` : ""}CLICK TO OPEN PROFILE`
+              : "NO DATABASE RECORD"}
+          </div>
         </div>
       )}
 
@@ -311,11 +422,22 @@ export function WorldMap({ countries }: { countries: Country[] }) {
       </div>
 
       <div className="pointer-events-none absolute bottom-4 left-4 rounded-md border border-border bg-panel/90 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground backdrop-blur">
+        <div className="mb-1 text-foreground">political violence risk</div>
+        {RISK_LEVELS.map((level) => (
+          <div key={level} className="flex items-center gap-2">
+            <span
+              className="inline-block h-2.5 w-2.5 rounded-sm"
+              style={{ background: riskFill(level) }}
+            />
+            {RISK_LABEL[level]}
+          </div>
+        ))}
         <div className="flex items-center gap-2">
-          <span className="inline-block h-2.5 w-2.5 rounded-sm bg-map-tracked" /> tracked country
-        </div>
-        <div className="mt-1 flex items-center gap-2">
-          <span className="inline-block h-2.5 w-2.5 rounded-sm bg-map-land" /> not in database
+          <span
+            className="inline-block h-2.5 w-2.5 rounded-sm"
+            style={{ background: riskFill(null) }}
+          />
+          no data
         </div>
         <div className="mt-1.5 text-primary">
           zoom ×{transform.k.toFixed(1)} · {detailLoaded ? "detailed" : "simplified"} borders
