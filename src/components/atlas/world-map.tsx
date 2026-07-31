@@ -229,46 +229,6 @@ export function WorldMap({
     });
   }, [features, path, resolveCountry]);
 
-  const labels = useMemo(() => {
-    const { k, x, y } = transform;
-    const placed: { x0: number; y0: number; x1: number; y1: number }[] = [];
-    const out: { key: string; text: string; sx: number; sy: number; tracked: boolean }[] = [];
-    const candidates = [...rendered]
-      .filter((r) => r.name && Number.isFinite(r.centroid[0]))
-      .sort((a, b) => b.area - a.area);
-
-    for (const r of candidates) {
-      const screenArea = r.area * k * k;
-      if (screenArea < 600) continue;
-      const sx = r.centroid[0] * k + x;
-      const sy = r.centroid[1] * k + y;
-      if (sx < 40 || sy < 16 || sx > size.width - 40 || sy > size.height - 12) continue;
-
-      const fontSize = Math.min(13, Math.max(9, 7 + Math.log2(screenArea) * 0.55));
-      const halfWidth = (r.name.length * fontSize * 0.31) / 1;
-      const box = {
-        x0: sx - halfWidth,
-        y0: sy - fontSize * 0.8,
-        x1: sx + halfWidth,
-        y1: sy + fontSize * 0.8,
-      };
-      const collides = placed.some(
-        (p) => !(box.x1 < p.x0 || box.x0 > p.x1 || box.y1 < p.y0 || box.y0 > p.y1),
-      );
-      if (collides) continue;
-      placed.push(box);
-      out.push({
-        key: r.key,
-        text: r.name,
-        sx,
-        sy,
-        tracked: Boolean(r.country && (!focusIso || focusIso.has(r.country.iso_a3))),
-      });
-      if (out.length > 90) break;
-    }
-    return out;
-  }, [rendered, transform, size, focusIso]);
-
   const openCountry = (country: Country | undefined) => {
     if (!country) return;
     setSelected(country.iso_a3);
@@ -347,26 +307,6 @@ export function WorldMap({
               />
             );
           })}
-        </g>
-        <g pointerEvents="none">
-          {labels.map((l) => (
-            <text
-              key={l.key}
-              x={l.sx}
-              y={l.sy}
-              textAnchor="middle"
-              fontSize={l.tracked ? 11 : 10}
-              fontFamily="var(--font-mono)"
-              letterSpacing="0.06em"
-              fill={l.tracked ? "var(--foreground)" : "var(--muted-foreground)"}
-              stroke="var(--map-ocean)"
-              strokeWidth={2.5}
-              paintOrder="stroke"
-              opacity={l.tracked ? 1 : 0.7}
-            >
-              {l.text}
-            </text>
-          ))}
         </g>
       </svg>
 
