@@ -41,6 +41,7 @@ function toInput(spec: FieldSpec, value: unknown): string {
 }
 
 function fromInput(spec: FieldSpec, raw: string): unknown {
+  if (spec.type === "select" && raw.trim() === "") return null;
   switch (spec.type) {
     case "list":
       return parseLines(raw);

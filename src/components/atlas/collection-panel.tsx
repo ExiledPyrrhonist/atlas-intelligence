@@ -14,6 +14,7 @@ function toInput(spec: FieldSpec, value: unknown): string {
 }
 
 function fromInput(spec: FieldSpec, raw: string): unknown {
+  if (spec.type === "select" && raw.trim() === "") return null;
   if (spec.type === "tags") return raw.split(",").map((v) => v.trim()).filter(Boolean);
   if (spec.type === "list") return raw.split("\n").map((v) => v.trim()).filter(Boolean);
   if (spec.type === "number") return raw.trim() === "" ? 0 : Number(raw);
