@@ -24,6 +24,8 @@ export type FieldSpec = {
   optionLabels?: Record<string, string>;
   /** Select fields marked optional may be left empty (stored as null). */
   optional?: boolean;
+  /** Value pre-filled when creating a new record. */
+  defaultValue?: string;
   suffix?: string;
 };
 

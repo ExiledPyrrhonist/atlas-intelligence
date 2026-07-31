@@ -30,7 +30,8 @@ function buildDraft(fields: FieldSpec[], row?: AnyRow): Record<string, string> {
       continue;
     }
     // New records pre-select the first option so required enum columns are never empty.
-    draft[f.key] = f.type === "select" && !f.optional ? (f.options?.[0] ?? "") : "";
+    draft[f.key] =
+      f.defaultValue ?? (f.type === "select" && !f.optional ? (f.options?.[0] ?? "") : "");
   }
   return draft;
 }
