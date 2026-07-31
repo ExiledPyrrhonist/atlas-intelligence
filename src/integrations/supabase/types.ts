@@ -592,6 +592,7 @@ export type Database = {
       research_notes: {
         Row: {
           body: string
+          category: string
           confidence: Database["public"]["Enums"]["confidence_level"]
           created_at: string
           entity_id: string | null
@@ -604,6 +605,7 @@ export type Database = {
         }
         Insert: {
           body?: string
+          category?: string
           confidence?: Database["public"]["Enums"]["confidence_level"]
           created_at?: string
           entity_id?: string | null
@@ -616,6 +618,7 @@ export type Database = {
         }
         Update: {
           body?: string
+          category?: string
           confidence?: Database["public"]["Enums"]["confidence_level"]
           created_at?: string
           entity_id?: string | null

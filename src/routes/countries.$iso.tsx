@@ -3,24 +3,22 @@ import { useQuery } from "@tanstack/react-query";
 import {
   countryQuery,
   countryDossierQuery,
-  formatCompact,
-  formatMoney,
   formatDate,
-  parseParties,
 } from "@/lib/atlas";
 import {
-  Field,
-  ListBlock,
   SectionTitle,
-  TagList,
   WhyThisMatters,
   ImportanceBadge,
   ConfidenceBadge,
   RatingBar,
+  TagList,
 } from "@/components/atlas/primitives";
+import { RecordEditor, type FieldSpec } from "@/components/atlas/record-editor";
+import { CollectionPanel } from "@/components/atlas/collection-panel";
 import { NotesPanel } from "@/components/atlas/notes-panel";
+import { SourcesPanel } from "@/components/atlas/sources-panel";
+import { StatisticsPanel } from "@/components/atlas/statistics-panel";
 import { riskFill } from "@/components/atlas/world-map";
-
 
 export const Route = createFileRoute("/countries/$iso")({
   head: ({ params }) => ({
@@ -28,17 +26,104 @@ export const Route = createFileRoute("/countries/$iso")({
       { title: `${params.iso} Dossier — Political Intelligence Atlas` },
       {
         name: "description",
-        content: `Full political dossier: government, leadership, economy, conflicts, alliances, statistics and analyst notes for ${params.iso}.`,
+        content: `Editable political dossier: government, leadership, economy, conflicts, alliances, statistics and analyst notes for ${params.iso}.`,
       },
       { property: "og:title", content: `${params.iso} Dossier — Political Intelligence Atlas` },
       {
         property: "og:description",
         content: "Country intelligence dossier with linked figures, events and sources.",
       },
+      { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: CountryDossier,
 });
+
+const OVERVIEW: FieldSpec[] = [
+  { key: "name", label: "Country name" },
+  { key: "flag_emoji", label: "Flag" },
+  { key: "region", label: "Region" },
+  { key: "subregion", label: "Subregion" },
+  { key: "capital", label: "Capital" },
+  { key: "population", label: "Population", type: "number" },
+  {
+    key: "importance",
+    label: "Importance",
+    type: "select",
+    options: ["critical", "high", "medium", "low"],
+  },
+  {
+    key: "confidence",
+    label: "Confidence",
+    type: "select",
+    options: ["confirmed", "likely", "disputed", "unknown"],
+  },
+  { key: "why_this_matters", label: "Why this matters", type: "textarea" },
+  { key: "tags", label: "Tags (comma separated)", type: "tags" },
+];
+
+const GOVERNMENT: FieldSpec[] = [
+  { key: "political_system", label: "Political system" },
+  { key: "government_type", label: "Government type" },
+  { key: "head_of_state", label: "Head of state" },
+  { key: "head_of_government", label: "Head of government" },
+  { key: "major_parties", label: "Major parties", type: "parties" },
+  { key: "ideologies", label: "Dominant ideologies", type: "list" },
+  { key: "political_issues", label: "Key political issues", type: "list" },
+  { key: "democracy_rating", label: "Democracy index (0-10)", type: "number" },
+  { key: "corruption_rating", label: "Corruption perception (0-100)", type: "number" },
+];
+
+const SECURITY: FieldSpec[] = [
+  {
+    key: "political_violence_risk",
+    label: "Political violence risk",
+    type: "select",
+    options: ["low", "moderate", "high", "severe"],
+  },
+  { key: "stability_rating", label: "Stability (0-10)", type: "number" },
+  {
+    key: "terrorism_risk",
+    label: "Terrorism risk",
+    type: "select",
+    options: ["low", "moderate", "high", "severe"],
+  },
+  { key: "military_info", label: "Military posture", type: "textarea" },
+  { key: "current_conflicts", label: "Active conflicts", type: "list" },
+  { key: "historical_conflicts", label: "Historical conflicts", type: "list" },
+  { key: "insurgencies", label: "Insurgencies", type: "list" },
+  { key: "border_disputes", label: "Border disputes", type: "list" },
+];
+
+const RELATIONS: FieldSpec[] = [
+  { key: "key_allies", label: "Key allies", type: "list" },
+  { key: "key_rivals", label: "Key rivals", type: "list" },
+  { key: "intl_organizations", label: "International organizations", type: "list" },
+];
+
+const ECONOMY: FieldSpec[] = [
+  { key: "gdp_usd", label: "GDP (USD)", type: "number" },
+  { key: "population", label: "Population", type: "number" },
+  { key: "research_notes", label: "Economic research notes", type: "textarea" },
+];
+
+const FIGURE_FIELDS: FieldSpec[] = [
+  { key: "name", label: "Name" },
+  { key: "position", label: "Position" },
+  { key: "party", label: "Party" },
+  { key: "ideology", label: "Ideology" },
+  { key: "in_office_since", label: "In office since" },
+  {
+    key: "importance",
+    label: "Importance",
+    type: "select",
+    options: ["critical", "high", "medium", "low"],
+  },
+  { key: "biography", label: "Biography", type: "textarea" },
+  { key: "important_actions", label: "Important actions", type: "list" },
+  { key: "tags", label: "Tags", type: "tags" },
+];
 
 function CountryDossier() {
   const { iso } = Route.useParams();
@@ -59,19 +144,20 @@ function CountryDossier() {
       </div>
     );
 
-  const parties = parseParties(country.major_parties);
-
   return (
     <div className="mx-auto max-w-7xl space-y-6 p-4 md:p-6">
       <header className="panel-surface p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <div className="label-hud">{country.region} · {country.subregion}</div>
+            <div className="label-hud">
+              {country.region} · {country.subregion}
+            </div>
             <h1 className="mt-1 text-2xl font-semibold">
               {country.flag_emoji} {country.name}
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              {country.political_system} · Capital {country.capital}
+              {country.political_system || "No political system recorded"} · Capital{" "}
+              {country.capital || "—"}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-1">
@@ -87,90 +173,85 @@ function CountryDossier() {
             <ImportanceBadge level={country.importance} />
             <ConfidenceBadge level={country.confidence} />
           </div>
-
         </div>
-        <div className="mt-4">
+        <div className="mt-4 flex items-center justify-between gap-3">
           <TagList tags={country.tags} />
+          <span className="font-mono text-[10px] text-muted-foreground">
+            last updated {formatDate(country.last_updated.slice(0, 10))}
+          </span>
         </div>
       </header>
 
       <WhyThisMatters text={country.why_this_matters} />
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <section className="panel-surface p-4">
-          <SectionTitle title="Core profile" />
-          <Field label="Government type" value={country.government_type} />
-          <Field label="Head of state" value={country.head_of_state} />
-          <Field label="Head of government" value={country.head_of_government} />
-          <Field label="Population" value={formatCompact(country.population)} />
-          <Field label="GDP" value={formatMoney(Number(country.gdp_usd))} />
-          <Field label="Political system" value={country.political_system} />
-          <Field label="Military posture" value={country.military_info} />
-        </section>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <RecordEditor table="countries" record={country} fields={OVERVIEW} title="Overview" />
+        <RecordEditor
+          table="countries"
+          record={country}
+          fields={GOVERNMENT}
+          title="Government & politics"
+        />
+        <RecordEditor
+          table="countries"
+          record={country}
+          fields={SECURITY}
+          title="Security & conflict"
+        />
+        <RecordEditor
+          table="countries"
+          record={country}
+          fields={RELATIONS}
+          title="International relations"
+        />
+        <RecordEditor table="countries" record={country} fields={ECONOMY} title="Economy" />
 
         <section className="panel-surface space-y-4 p-4">
           <SectionTitle title="Analytical ratings" />
           <RatingBar label="Democracy index" value={Number(country.democracy_rating)} />
           <RatingBar label="Stability" value={country.stability_rating} />
-          <RatingBar label="Corruption perception" value={country.corruption_rating} />
-          
-        </section>
-
-        <section className="panel-surface p-4">
-          <SectionTitle title="Major parties" count={parties.length} />
-          <ul className="space-y-2">
-            {parties.map((p) => (
-              <li key={p.name} className="border-b border-border/60 pb-2 text-sm last:border-0">
-                <div className="font-medium">{p.name}</div>
-                <div className="text-xs text-muted-foreground">{p.ideology}</div>
-              </li>
-            ))}
-          </ul>
+          <RatingBar
+            label="Corruption perception"
+            value={Number(country.corruption_rating)}
+            max={100}
+          />
         </section>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <section className="panel-surface p-4">
-          <SectionTitle title="Key political issues" />
-          <ListBlock items={country.political_issues} />
-        </section>
-        <section className="panel-surface p-4">
-          <SectionTitle title="Active conflicts" />
-          <ListBlock items={country.current_conflicts} />
-        </section>
-        <section className="panel-surface p-4">
-          <SectionTitle title="Key allies" />
-          <ListBlock items={country.key_allies} />
-        </section>
-        <section className="panel-surface p-4">
-          <SectionTitle title="Key rivals" />
-          <ListBlock items={country.key_rivals} />
-        </section>
-      </div>
-
-      <section>
-        <SectionTitle title="Linked figures" count={dossier?.figures.length ?? 0} />
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-          {dossier?.figures.map((f) => (
+      <CollectionPanel
+        table="political_figures"
+        title="Political figures"
+        addLabel="Add figure"
+        rows={(dossier?.figures ?? []) as never[]}
+        fields={FIGURE_FIELDS}
+        searchKeys={["name", "position", "party", "ideology"]}
+        defaults={{ country_id: country.id }}
+        renderRow={(f) => (
+          <div>
             <Link
-              key={f.id}
               to="/people/$id"
-              params={{ id: f.id }}
-              className="panel-surface p-3 hover:border-primary/50"
+              params={{ id: String(f["id"]) }}
+              className="text-sm font-medium hover:text-primary"
             >
-              <div className="text-sm font-medium">{f.name}</div>
-              <div className="text-xs text-muted-foreground">{f.position}</div>
-              <div className="mt-1 font-mono text-[11px] text-muted-foreground">
-                {f.ideology}
-              </div>
+              {String(f["name"] ?? "")}
             </Link>
-          ))}
-        </div>
-      </section>
+            <div className="text-xs text-muted-foreground">
+              {String(f["position"] ?? "—")}
+              {f["party"] ? ` · ${String(f["party"])}` : ""}
+            </div>
+            <div className="mt-1 font-mono text-[11px] text-muted-foreground">
+              {String(f["ideology"] ?? "")}
+            </div>
+          </div>
+        )}
+      />
 
       <section>
         <SectionTitle title="Event timeline" count={dossier?.events.length ?? 0} />
         <div className="space-y-2">
+          {(dossier?.events.length ?? 0) === 0 && (
+            <p className="text-sm text-muted-foreground">No linked events.</p>
+          )}
           {dossier?.events.map(({ role, event }) => (
             <Link
               key={event!.id}
@@ -190,39 +271,14 @@ function CountryDossier() {
         </div>
       </section>
 
-      <section>
-        <SectionTitle title="Statistics" count={dossier?.statistics.length ?? 0} />
-        <div className="overflow-x-auto rounded-md border border-border">
-          <table className="w-full min-w-[600px] text-sm">
-            <thead className="bg-panel">
-              <tr className="label-hud">
-                <th className="px-3 py-2 text-left">Indicator</th>
-                <th className="px-3 py-2 text-left">Category</th>
-                <th className="px-3 py-2 text-right">Value</th>
-                <th className="px-3 py-2 text-right">Year</th>
-                <th className="px-3 py-2 text-left">Source</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dossier?.statistics.map((s) => (
-                <tr key={s.id} className="border-t border-border/60">
-                  <td className="px-3 py-2">{s.name}</td>
-                  <td className="px-3 py-2 text-muted-foreground">{s.category}</td>
-                  <td className="px-3 py-2 text-right font-mono">
-                    {Number(s.value).toLocaleString()} {s.unit}
-                  </td>
-                  <td className="px-3 py-2 text-right font-mono">{s.year}</td>
-                  <td className="px-3 py-2 text-muted-foreground">{s.sources?.title ?? "—"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <StatisticsPanel countryId={country.id} />
 
       <section>
         <SectionTitle title="Organizations" count={dossier?.organizations.length ?? 0} />
         <div className="flex flex-wrap gap-2">
+          {(dossier?.organizations.length ?? 0) === 0 && (
+            <p className="text-sm text-muted-foreground">No memberships recorded.</p>
+          )}
           {dossier?.organizations.map((o) => (
             <Link
               key={o!.id}
@@ -230,26 +286,13 @@ function CountryDossier() {
               params={{ id: o!.id }}
               className="rounded border border-border bg-secondary px-2 py-1 text-xs hover:border-primary/50"
             >
-              {o!.abbreviation ?? o!.name}
+              {o!.abbreviation || o!.name}
             </Link>
           ))}
         </div>
       </section>
 
-      <section>
-        <SectionTitle title="Sources" count={dossier?.sources.length ?? 0} />
-        <ul className="space-y-2">
-          {dossier?.sources.map(({ source, note }, i) => (
-            <li key={i} className="panel-surface p-3 text-sm">
-              <div className="font-medium">{source?.title}</div>
-              <div className="text-xs text-muted-foreground">
-                {source?.publisher} · reliability {source?.reliability}
-              </div>
-              {note && <div className="mt-1 text-xs text-muted-foreground">{note}</div>}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <SourcesPanel entityType="country" entityId={country.id} />
 
       <NotesPanel entityType="country" entityId={country.id} />
     </div>
