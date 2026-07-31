@@ -24,7 +24,14 @@ function fromInput(spec: FieldSpec, raw: string): unknown {
 
 function buildDraft(fields: FieldSpec[], row?: AnyRow): Record<string, string> {
   const draft: Record<string, string> = {};
-  for (const f of fields) draft[f.key] = row ? toInput(f, row[f.key]) : "";
+  for (const f of fields) {
+    if (row) {
+      draft[f.key] = toInput(f, row[f.key]);
+      continue;
+    }
+    // New records pre-select the first option so required enum columns are never empty.
+    draft[f.key] = f.type === "select" && !f.optional ? (f.options?.[0] ?? "") : "";
+  }
   return draft;
 }
 

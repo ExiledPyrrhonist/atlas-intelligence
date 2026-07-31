@@ -22,6 +22,8 @@ export type FieldSpec = {
   type?: FieldType;
   options?: readonly string[];
   optionLabels?: Record<string, string>;
+  /** Select fields marked optional may be left empty (stored as null). */
+  optional?: boolean;
   suffix?: string;
 };
 

@@ -39,6 +39,7 @@ export function StatisticsPanel({ countryId }: { countryId: string }) {
       key: "source_id",
       label: "Source",
       type: "select",
+      optional: true,
       options: sources.map((s) => s.id),
       optionLabels: Object.fromEntries(sources.map((s) => [s.id, s.title])),
     },
