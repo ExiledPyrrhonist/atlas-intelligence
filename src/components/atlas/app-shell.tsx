@@ -10,7 +10,10 @@ import {
   Building2,
   BarChart3,
   BookMarked,
+  NotebookPen,
+  Lightbulb,
   GraduationCap,
+
   Search,
   X,
 } from "lucide-react";
@@ -25,9 +28,12 @@ const NAV = [
   { to: "/events", label: "Events", icon: CalendarClock },
   { to: "/organizations", label: "Organizations", icon: Building2 },
   { to: "/statistics", label: "Statistics", icon: BarChart3 },
+  { to: "/facts", label: "Facts", icon: Lightbulb },
   { to: "/sources", label: "Sources", icon: BookMarked },
+  { to: "/notes", label: "Notes", icon: NotebookPen },
   { to: "/study", label: "Study Mode", icon: GraduationCap },
 ] as const;
+
 
 function GlobalSearch() {
   const [term, setTerm] = useState("");
