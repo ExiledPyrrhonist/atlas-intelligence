@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StudyRouteImport } from './routes/study'
 import { Route as StatisticsRouteImport } from './routes/statistics'
 import { Route as SourcesRouteImport } from './routes/sources'
 import { Route as NotesRouteImport } from './routes/notes'
@@ -24,6 +25,11 @@ import { Route as OrganizationsIdRouteImport } from './routes/organizations.$id'
 import { Route as EventsIdRouteImport } from './routes/events.$id'
 import { Route as CountriesIsoRouteImport } from './routes/countries.$iso'
 
+const StudyRoute = StudyRouteImport.update({
+  id: '/study',
+  path: '/study',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StatisticsRoute = StatisticsRouteImport.update({
   id: '/statistics',
   path: '/statistics',
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/notes': typeof NotesRoute
   '/sources': typeof SourcesRoute
   '/statistics': typeof StatisticsRoute
+  '/study': typeof StudyRoute
   '/countries/$iso': typeof CountriesIsoRoute
   '/events/$id': typeof EventsIdRoute
   '/organizations/$id': typeof OrganizationsIdRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/notes': typeof NotesRoute
   '/sources': typeof SourcesRoute
   '/statistics': typeof StatisticsRoute
+  '/study': typeof StudyRoute
   '/countries/$iso': typeof CountriesIsoRoute
   '/events/$id': typeof EventsIdRoute
   '/organizations/$id': typeof OrganizationsIdRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/notes': typeof NotesRoute
   '/sources': typeof SourcesRoute
   '/statistics': typeof StatisticsRoute
+  '/study': typeof StudyRoute
   '/countries/$iso': typeof CountriesIsoRoute
   '/events/$id': typeof EventsIdRoute
   '/organizations/$id': typeof OrganizationsIdRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/notes'
     | '/sources'
     | '/statistics'
+    | '/study'
     | '/countries/$iso'
     | '/events/$id'
     | '/organizations/$id'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/notes'
     | '/sources'
     | '/statistics'
+    | '/study'
     | '/countries/$iso'
     | '/events/$id'
     | '/organizations/$id'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/notes'
     | '/sources'
     | '/statistics'
+    | '/study'
     | '/countries/$iso'
     | '/events/$id'
     | '/organizations/$id'
@@ -202,6 +214,7 @@ export interface RootRouteChildren {
   NotesRoute: typeof NotesRoute
   SourcesRoute: typeof SourcesRoute
   StatisticsRoute: typeof StatisticsRoute
+  StudyRoute: typeof StudyRoute
   CountriesIsoRoute: typeof CountriesIsoRoute
   EventsIdRoute: typeof EventsIdRoute
   OrganizationsIdRoute: typeof OrganizationsIdRoute
@@ -214,6 +227,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/study': {
+      id: '/study'
+      path: '/study'
+      fullPath: '/study'
+      preLoaderRoute: typeof StudyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/statistics': {
       id: '/statistics'
       path: '/statistics'
@@ -322,6 +342,7 @@ const rootRouteChildren: RootRouteChildren = {
   NotesRoute: NotesRoute,
   SourcesRoute: SourcesRoute,
   StatisticsRoute: StatisticsRoute,
+  StudyRoute: StudyRoute,
   CountriesIsoRoute: CountriesIsoRoute,
   EventsIdRoute: EventsIdRoute,
   OrganizationsIdRoute: OrganizationsIdRoute,

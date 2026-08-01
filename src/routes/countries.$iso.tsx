@@ -18,6 +18,8 @@ import { CollectionPanel } from "@/components/atlas/collection-panel";
 import { NotesPanel } from "@/components/atlas/notes-panel";
 import { SourcesPanel } from "@/components/atlas/sources-panel";
 import { StatisticsPanel } from "@/components/atlas/statistics-panel";
+import { FactsPanel } from "@/components/atlas/facts-panel";
+
 import { riskFill } from "@/components/atlas/world-map";
 
 export const Route = createFileRoute("/countries/$iso")({
@@ -292,9 +294,21 @@ function CountryDossier() {
         </div>
       </section>
 
+      <FactsPanel column="country_id" entityId={country.id} />
+
+      <div className="flex justify-end">
+        <Link
+          to="/study"
+          className="rounded border border-border bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+        >
+          Study these facts
+        </Link>
+      </div>
+
       <SourcesPanel entityType="country" entityId={country.id} />
 
       <NotesPanel entityType="country" entityId={country.id} />
+
     </div>
   );
 }
