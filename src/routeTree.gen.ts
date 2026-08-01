@@ -12,7 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PeopleIndexRouteImport } from './routes/people.index'
+import { Route as OrganizationsIndexRouteImport } from './routes/organizations.index'
+import { Route as EventsIndexRouteImport } from './routes/events.index'
 import { Route as CountriesIndexRouteImport } from './routes/countries.index'
+import { Route as PeopleIdRouteImport } from './routes/people.$id'
+import { Route as OrganizationsIdRouteImport } from './routes/organizations.$id'
+import { Route as EventsIdRouteImport } from './routes/events.$id'
 import { Route as CountriesIsoRouteImport } from './routes/countries.$iso'
 
 const DashboardRoute = DashboardRouteImport.update({
@@ -30,9 +35,34 @@ const PeopleIndexRoute = PeopleIndexRouteImport.update({
   path: '/people/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrganizationsIndexRoute = OrganizationsIndexRouteImport.update({
+  id: '/organizations/',
+  path: '/organizations/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsIndexRoute = EventsIndexRouteImport.update({
+  id: '/events/',
+  path: '/events/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CountriesIndexRoute = CountriesIndexRouteImport.update({
   id: '/countries/',
   path: '/countries/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PeopleIdRoute = PeopleIdRouteImport.update({
+  id: '/people/$id',
+  path: '/people/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizationsIdRoute = OrganizationsIdRouteImport.update({
+  id: '/organizations/$id',
+  path: '/organizations/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsIdRoute = EventsIdRouteImport.update({
+  id: '/events/$id',
+  path: '/events/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CountriesIsoRoute = CountriesIsoRouteImport.update({
@@ -45,14 +75,24 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/countries/$iso': typeof CountriesIsoRoute
+  '/events/$id': typeof EventsIdRoute
+  '/organizations/$id': typeof OrganizationsIdRoute
+  '/people/$id': typeof PeopleIdRoute
   '/countries/': typeof CountriesIndexRoute
+  '/events/': typeof EventsIndexRoute
+  '/organizations/': typeof OrganizationsIndexRoute
   '/people/': typeof PeopleIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/countries/$iso': typeof CountriesIsoRoute
+  '/events/$id': typeof EventsIdRoute
+  '/organizations/$id': typeof OrganizationsIdRoute
+  '/people/$id': typeof PeopleIdRoute
   '/countries': typeof CountriesIndexRoute
+  '/events': typeof EventsIndexRoute
+  '/organizations': typeof OrganizationsIndexRoute
   '/people': typeof PeopleIndexRoute
 }
 export interface FileRoutesById {
@@ -60,20 +100,50 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/countries/$iso': typeof CountriesIsoRoute
+  '/events/$id': typeof EventsIdRoute
+  '/organizations/$id': typeof OrganizationsIdRoute
+  '/people/$id': typeof PeopleIdRoute
   '/countries/': typeof CountriesIndexRoute
+  '/events/': typeof EventsIndexRoute
+  '/organizations/': typeof OrganizationsIndexRoute
   '/people/': typeof PeopleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/countries/$iso' | '/countries/' | '/people/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/countries/$iso'
+    | '/events/$id'
+    | '/organizations/$id'
+    | '/people/$id'
+    | '/countries/'
+    | '/events/'
+    | '/organizations/'
+    | '/people/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/countries/$iso' | '/countries' | '/people'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/countries/$iso'
+    | '/events/$id'
+    | '/organizations/$id'
+    | '/people/$id'
+    | '/countries'
+    | '/events'
+    | '/organizations'
+    | '/people'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
     | '/countries/$iso'
+    | '/events/$id'
+    | '/organizations/$id'
+    | '/people/$id'
     | '/countries/'
+    | '/events/'
+    | '/organizations/'
     | '/people/'
   fileRoutesById: FileRoutesById
 }
@@ -81,7 +151,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   CountriesIsoRoute: typeof CountriesIsoRoute
+  EventsIdRoute: typeof EventsIdRoute
+  OrganizationsIdRoute: typeof OrganizationsIdRoute
+  PeopleIdRoute: typeof PeopleIdRoute
   CountriesIndexRoute: typeof CountriesIndexRoute
+  EventsIndexRoute: typeof EventsIndexRoute
+  OrganizationsIndexRoute: typeof OrganizationsIndexRoute
   PeopleIndexRoute: typeof PeopleIndexRoute
 }
 
@@ -108,11 +183,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PeopleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/organizations/': {
+      id: '/organizations/'
+      path: '/organizations'
+      fullPath: '/organizations/'
+      preLoaderRoute: typeof OrganizationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events/': {
+      id: '/events/'
+      path: '/events'
+      fullPath: '/events/'
+      preLoaderRoute: typeof EventsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/countries/': {
       id: '/countries/'
       path: '/countries'
       fullPath: '/countries/'
       preLoaderRoute: typeof CountriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/people/$id': {
+      id: '/people/$id'
+      path: '/people/$id'
+      fullPath: '/people/$id'
+      preLoaderRoute: typeof PeopleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organizations/$id': {
+      id: '/organizations/$id'
+      path: '/organizations/$id'
+      fullPath: '/organizations/$id'
+      preLoaderRoute: typeof OrganizationsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events/$id': {
+      id: '/events/$id'
+      path: '/events/$id'
+      fullPath: '/events/$id'
+      preLoaderRoute: typeof EventsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/countries/$iso': {
@@ -129,7 +239,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   CountriesIsoRoute: CountriesIsoRoute,
+  EventsIdRoute: EventsIdRoute,
+  OrganizationsIdRoute: OrganizationsIdRoute,
+  PeopleIdRoute: PeopleIdRoute,
   CountriesIndexRoute: CountriesIndexRoute,
+  EventsIndexRoute: EventsIndexRoute,
+  OrganizationsIndexRoute: OrganizationsIndexRoute,
   PeopleIndexRoute: PeopleIndexRoute,
 }
 export const routeTree = rootRouteImport
