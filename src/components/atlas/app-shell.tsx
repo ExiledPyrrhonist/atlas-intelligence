@@ -124,19 +124,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <aside className="sticky top-0 hidden h-screen w-56 shrink-0 flex-col border-r border-sidebar-border bg-sidebar lg:flex">
-        <div className="border-b border-sidebar-border px-4 py-4">
-          <div className="flex items-center gap-2">
+      <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-sidebar-border/70 bg-sidebar lg:flex">
+        <div className="px-5 py-5">
+          <div className="flex items-center gap-2.5">
             <Globe2 className="h-5 w-5 text-primary" />
             <div>
-              <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">
+              <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
                 Atlas
               </div>
               <div className="text-sm font-semibold leading-tight">Political Intelligence</div>
             </div>
           </div>
         </div>
-        <nav className="flex-1 space-y-0.5 p-2">
+        <nav className="flex-1 space-y-1 px-3 pb-3">
           {NAV.map(({ to, label, icon: Icon, ...rest }) => {
             const exact = "exact" in rest && rest.exact;
             const active = exact ? pathname === to : pathname.startsWith(to);
@@ -145,10 +145,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 key={to}
                 to={to}
                 className={cn(
-                  "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors",
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-[0.9375rem] transition-colors",
                   active
-                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                    : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-foreground",
+                    ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
+                    : "text-muted-foreground hover:bg-sidebar-accent/50 hover:text-foreground",
                 )}
               >
                 <Icon className={cn("h-4 w-4", active && "text-primary")} />
@@ -157,17 +157,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             );
           })}
         </nav>
-        <div className="border-t border-sidebar-border px-4 py-3">
+        <div className="px-5 py-4">
           <div className="label-hud">Classification</div>
           <div className="mt-1 font-mono text-[11px] text-signal">OSINT / UNCLASSIFIED</div>
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-40 flex flex-wrap items-center gap-3 border-b border-border bg-background/95 px-4 py-2.5 backdrop-blur">
+        <header className="sticky top-0 z-40 flex flex-wrap items-center gap-3 border-b border-border/60 bg-background/85 px-5 py-3 backdrop-blur-md">
           <Link to="/" className="flex items-center gap-2 lg:hidden">
             <Globe2 className="h-5 w-5 text-primary" />
-            <span className="font-mono text-xs uppercase tracking-[0.18em]">Atlas</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.16em]">Atlas</span>
           </Link>
           <GlobalSearch />
           <div className="ml-auto hidden font-mono text-[11px] text-muted-foreground md:block">
@@ -175,18 +175,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <nav className="flex gap-1 overflow-x-auto border-b border-border bg-panel px-2 py-1.5 lg:hidden">
+        <nav className="flex gap-1 overflow-x-auto border-b border-border/60 bg-panel px-3 py-2 lg:hidden">
           {NAV.map(({ to, label }) => (
             <Link
               key={to}
               to={to}
-              className="whitespace-nowrap rounded px-2.5 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
+              className="whitespace-nowrap rounded-lg px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
               activeProps={{ className: "bg-accent text-foreground" }}
             >
               {label}
             </Link>
           ))}
         </nav>
+
 
         <main className="min-w-0 flex-1">{children}</main>
       </div>
