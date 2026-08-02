@@ -99,7 +99,7 @@ function MapPage() {
               ))}
             </select>
           </div>
-          <div className="font-mono text-[11px] text-muted-foreground">
+          <div className="text-xs text-muted-foreground">
             {sorted.length} states in view
           </div>
         </div>
