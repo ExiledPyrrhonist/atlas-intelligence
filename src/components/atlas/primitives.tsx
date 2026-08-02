@@ -24,17 +24,17 @@ export function ConfidenceBadge({ level }: { level: string }) {
 }
 
 export function MetaChip({ children }: { children: React.ReactNode }) {
-  return <Chip className="border-border bg-secondary text-muted-foreground">{children}</Chip>;
+  return <Chip className="border-transparent bg-secondary text-muted-foreground">{children}</Chip>;
 }
 
 export function TagList({ tags }: { tags: string[] }) {
   if (!tags?.length) return null;
   return (
-    <div className="flex flex-wrap gap-1">
+    <div className="flex flex-wrap gap-1.5">
       {tags.map((t) => (
         <span
           key={t}
-          className="rounded-sm border border-border bg-secondary px-1.5 py-0.5 text-[11px] text-muted-foreground"
+          className="rounded-full bg-secondary px-2.5 py-0.5 text-[11.5px] text-muted-foreground"
         >
           #{t}
         </span>
@@ -45,9 +45,9 @@ export function TagList({ tags }: { tags: string[] }) {
 
 export function Field({ label, value }: { label: string; value: React.ReactNode }) {
   return (
-    <div className="border-b border-border/60 py-2 last:border-0">
+    <div className="border-b border-border/40 py-2.5 last:border-0">
       <div className="label-hud">{label}</div>
-      <div className="mt-1 text-sm text-foreground">{value || "—"}</div>
+      <div className="mt-1.5 text-sm leading-relaxed text-foreground">{value || "—"}</div>
     </div>
   );
 }
@@ -62,17 +62,18 @@ export function SectionTitle({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between gap-3 border-b border-border pb-2">
-      <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
+    <div className="mb-4 flex items-center justify-between gap-3">
+      <h2 className="text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-foreground/80">
         {title}
         {typeof count === "number" && (
-          <span className="ml-2 text-muted-foreground">[{count}]</span>
+          <span className="ml-2 font-normal text-muted-foreground">{count}</span>
         )}
       </h2>
       {action}
     </div>
   );
 }
+
 
 export function ListBlock({ items }: { items: string[] }) {
   if (!items?.length) return <p className="text-sm text-muted-foreground">No records.</p>;
