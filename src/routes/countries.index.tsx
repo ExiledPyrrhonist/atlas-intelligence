@@ -87,12 +87,12 @@ function CountriesIndex() {
             value={term}
             onChange={(e) => setTerm(e.target.value)}
             placeholder="Search name, capital, issue, tag…"
-            className="h-9 w-64 rounded-md border border-input bg-panel px-3 text-sm outline-none focus:border-ring"
+            className="h-9 w-64 rounded-xl border border-input bg-panel px-3 text-sm outline-none focus:border-ring"
           />
           <select
             value={region}
             onChange={(e) => setRegion(e.target.value)}
-            className="h-9 rounded-md border border-input bg-panel px-2 text-sm"
+            className="h-9 rounded-xl border border-input bg-panel px-2 text-sm"
           >
             <option value="all">All regions</option>
             {regions.map((r) => (
@@ -104,7 +104,7 @@ function CountriesIndex() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortKey)}
-            className="h-9 rounded-md border border-input bg-panel px-2 text-sm"
+            className="h-9 rounded-xl border border-input bg-panel px-2 text-sm"
           >
             <option value="importance">Sort: priority</option>
             <option value="name">Sort: name</option>
@@ -118,7 +118,7 @@ function CountriesIndex() {
 
       {isLoading && <p className="text-sm text-muted-foreground">Loading dossiers…</p>}
 
-      <div className="overflow-x-auto rounded-md border border-border">
+      <div className="overflow-x-auto rounded-xl border border-border/60">
         <table className="w-full min-w-[880px] text-sm">
           <thead className="bg-panel">
             <tr className="label-hud">

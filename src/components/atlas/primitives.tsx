@@ -5,7 +5,7 @@ function Chip({ className, children }: { className?: string; children: React.Rea
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-sm border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em]",
+        "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.08em]",
         className,
       )}
     >
@@ -13,6 +13,7 @@ function Chip({ className, children }: { className?: string; children: React.Rea
     </span>
   );
 }
+
 
 export function ImportanceBadge({ level }: { level: string }) {
   return <Chip className={importanceClass(level)}>{level}</Chip>;
@@ -23,17 +24,17 @@ export function ConfidenceBadge({ level }: { level: string }) {
 }
 
 export function MetaChip({ children }: { children: React.ReactNode }) {
-  return <Chip className="border-border bg-secondary text-muted-foreground">{children}</Chip>;
+  return <Chip className="border-transparent bg-secondary text-muted-foreground">{children}</Chip>;
 }
 
 export function TagList({ tags }: { tags: string[] }) {
   if (!tags?.length) return null;
   return (
-    <div className="flex flex-wrap gap-1">
+    <div className="flex flex-wrap gap-1.5">
       {tags.map((t) => (
         <span
           key={t}
-          className="rounded-sm border border-border bg-secondary px-1.5 py-0.5 text-[11px] text-muted-foreground"
+          className="rounded-full bg-secondary px-2.5 py-0.5 text-[11.5px] text-muted-foreground"
         >
           #{t}
         </span>
@@ -44,9 +45,9 @@ export function TagList({ tags }: { tags: string[] }) {
 
 export function Field({ label, value }: { label: string; value: React.ReactNode }) {
   return (
-    <div className="border-b border-border/60 py-2 last:border-0">
+    <div className="border-b border-border/40 py-2.5 last:border-0">
       <div className="label-hud">{label}</div>
-      <div className="mt-1 text-sm text-foreground">{value || "—"}</div>
+      <div className="mt-1.5 text-sm leading-relaxed text-foreground">{value || "—"}</div>
     </div>
   );
 }
@@ -61,11 +62,11 @@ export function SectionTitle({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between gap-3 border-b border-border pb-2">
-      <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
+    <div className="mb-4 flex items-center justify-between gap-3">
+      <h2 className="text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-foreground/80">
         {title}
         {typeof count === "number" && (
-          <span className="ml-2 text-muted-foreground">[{count}]</span>
+          <span className="ml-2 font-normal text-muted-foreground">{count}</span>
         )}
       </h2>
       {action}
@@ -73,13 +74,14 @@ export function SectionTitle({
   );
 }
 
+
 export function ListBlock({ items }: { items: string[] }) {
   if (!items?.length) return <p className="text-sm text-muted-foreground">No records.</p>;
   return (
-    <ul className="space-y-1.5">
+    <ul className="space-y-2">
       {items.map((item) => (
-        <li key={item} className="flex gap-2 text-sm text-foreground/90">
-          <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+        <li key={item} className="flex gap-2.5 text-sm leading-relaxed text-foreground/90">
+          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />
           <span>{item}</span>
         </li>
       ))}
@@ -90,12 +92,13 @@ export function ListBlock({ items }: { items: string[] }) {
 export function WhyThisMatters({ text }: { text: string }) {
   if (!text) return null;
   return (
-    <div className="rounded-md border border-signal/35 bg-signal/8 p-4">
+    <div className="rounded-xl border border-signal/25 bg-signal/8 p-5">
       <div className="label-hud text-signal">Why this matters</div>
       <p className="mt-2 text-sm leading-relaxed text-foreground/90">{text}</p>
     </div>
   );
 }
+
 
 export function RatingBar({
   label,

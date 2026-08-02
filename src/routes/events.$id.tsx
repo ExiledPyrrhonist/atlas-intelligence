@@ -128,7 +128,7 @@ function EventDossier() {
                 key={c.countries.id}
                 to="/countries/$iso"
                 params={{ iso: c.countries.iso_a3 }}
-                className="rounded border border-border bg-secondary px-2 py-1 text-xs hover:border-primary/50"
+                className="rounded border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
               >
                 {c.countries.flag_emoji} {c.countries.name} · {c.role}
               </Link>
@@ -149,7 +149,7 @@ function EventDossier() {
                 key={f.political_figures.id}
                 to="/people/$id"
                 params={{ id: f.political_figures.id }}
-                className="rounded border border-border bg-secondary px-2 py-1 text-xs hover:border-primary/50"
+                className="rounded border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
               >
                 {f.political_figures.name} · {f.role}
               </Link>

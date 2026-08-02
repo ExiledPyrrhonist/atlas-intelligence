@@ -60,7 +60,7 @@ function NotesPage() {
               <h2 className="text-sm font-medium">{String(n["title"] ?? "")}</h2>
               <ImportanceBadge level={String(n["importance"] ?? "low")} />
               <ConfidenceBadge level={String(n["confidence"] ?? "unknown")} />
-              <span className="rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+              <span className="rounded-sm border border-border/60 bg-secondary px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
                 {String(n["category"] ?? "general")}
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">

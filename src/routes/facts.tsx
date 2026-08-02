@@ -38,7 +38,7 @@ function FactsPage() {
         </div>
         <Link
           to="/study"
-          className="rounded border border-border bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+          className="rounded border border-border/60 bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
         >
           Start study session
         </Link>
