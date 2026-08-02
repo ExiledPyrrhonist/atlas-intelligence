@@ -146,14 +146,14 @@
   --chart-4: oklch(0.7 0.14 150);
   --chart-5: oklch(0.66 0.18 22);
 
-  --sidebar: oklch(0.19 0.015 248);
-  --sidebar-foreground: oklch(0.88 0.008 240);
-  --sidebar-primary: oklch(0.75 0.12 196);
-  --sidebar-primary-foreground: oklch(0.17 0.02 240);
-  --sidebar-accent: oklch(0.26 0.018 248);
-  --sidebar-accent-foreground: oklch(0.94 0.008 240);
-  --sidebar-border: oklch(0.28 0.017 248);
-  --sidebar-ring: oklch(0.6 0.09 196);
+  --sidebar: oklch(0.185 0.006 250);
+  --sidebar-foreground: oklch(0.9 0.004 250);
+  --sidebar-primary: oklch(0.78 0.075 210);
+  --sidebar-primary-foreground: oklch(0.17 0.01 250);
+  --sidebar-accent: oklch(0.255 0.006 250);
+  --sidebar-accent-foreground: oklch(0.96 0.004 250);
+  --sidebar-border: oklch(0.255 0.006 250);
+  --sidebar-ring: oklch(0.62 0.06 210);
 }
 
 @layer base {
@@ -163,25 +163,44 @@
 
   html {
     color-scheme: dark;
+    font-size: 16px;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 650;
+    letter-spacing: -0.018em;
+    line-height: 1.25;
+  }
+
+  /* Soften legacy hairline separators into low-contrast dividers */
+  hr {
+    border-color: var(--color-border);
   }
 
   ::-webkit-scrollbar {
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-background);
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
     background: var(--color-border);
-    border-radius: 9px;
+    border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-muted-foreground);
@@ -189,18 +208,21 @@
 }
 
 @utility label-hud {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--color-muted-foreground);
 }
 
 @utility panel-surface {
   background-color: var(--color-panel);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in oklab, var(--color-border) 70%, transparent);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elevation-1);
 }
+
 
 @utility grid-backdrop {
   background-image:
