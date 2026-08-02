@@ -78,10 +78,10 @@ export function SectionTitle({
 export function ListBlock({ items }: { items: string[] }) {
   if (!items?.length) return <p className="text-sm text-muted-foreground">No records.</p>;
   return (
-    <ul className="space-y-1.5">
+    <ul className="space-y-2">
       {items.map((item) => (
-        <li key={item} className="flex gap-2 text-sm text-foreground/90">
-          <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+        <li key={item} className="flex gap-2.5 text-sm leading-relaxed text-foreground/90">
+          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />
           <span>{item}</span>
         </li>
       ))}
@@ -92,12 +92,13 @@ export function ListBlock({ items }: { items: string[] }) {
 export function WhyThisMatters({ text }: { text: string }) {
   if (!text) return null;
   return (
-    <div className="rounded-md border border-signal/35 bg-signal/8 p-4">
+    <div className="rounded-xl border border-signal/25 bg-signal/8 p-5">
       <div className="label-hud text-signal">Why this matters</div>
       <p className="mt-2 text-sm leading-relaxed text-foreground/90">{text}</p>
     </div>
   );
 }
+
 
 export function RatingBar({
   label,
