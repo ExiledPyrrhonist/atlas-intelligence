@@ -99,14 +99,14 @@ function GlobalSearch() {
         </button>
       )}
       {results.length > 0 && (
-        <div className="absolute left-0 right-0 top-11 z-50 max-h-80 overflow-auto rounded-md border border-border bg-popover shadow-xl">
+        <div className="absolute left-0 right-0 top-12 z-50 max-h-80 overflow-auto rounded-xl border border-border/70 bg-popover p-1 shadow-2xl">
           {results.map((r) => (
             <Link
               key={`${r.kind}-${r.label}`}
               to={r.to}
               params={r.params as never}
               onClick={() => setTerm("")}
-              className="flex items-center justify-between gap-3 border-b border-border/60 px-3 py-2 text-sm last:border-0 hover:bg-accent"
+              className="flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm hover:bg-accent"
             >
               <span className="truncate">{r.label}</span>
               <span className="label-hud shrink-0">{r.kind}</span>
@@ -114,6 +114,7 @@ function GlobalSearch() {
           ))}
         </div>
       )}
+
     </div>
   );
 }
