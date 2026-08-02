@@ -62,12 +62,9 @@ function MapPage() {
     <div className="flex h-[calc(100vh-3.25rem)] flex-col lg:flex-row">
       <div className="relative min-h-[55vh] flex-1">
         <div className="pointer-events-none absolute left-4 top-4 z-10 max-w-xs">
-          <h1 className="font-mono text-xs uppercase tracking-[0.22em] text-primary">
-            Global situation map
+          <h1 className="text-lg font-semibold tracking-tight text-foreground">
+            Global Situation Map
           </h1>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Scroll to zoom · drag to pan · click any country to open its intelligence profile.
-          </p>
         </div>
         <WorldMap countries={countries} focusIso={filtersActive ? focusIso : undefined} />
       </div>
