@@ -81,13 +81,14 @@ function GlobalSearch() {
 
   return (
     <div className="relative w-full max-w-md">
-      <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+      <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <input
         value={term}
         onChange={(e) => setTerm(e.target.value)}
         placeholder="Search countries, figures, events, organizations…"
-        className="h-9 w-full rounded-md border border-input bg-panel pl-9 pr-8 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-ring"
+        className="h-10 w-full rounded-xl border border-border/70 bg-panel pl-10 pr-8 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-ring/70 focus:bg-card"
       />
+
       {term && (
         <button
           onClick={() => setTerm("")}
