@@ -144,7 +144,7 @@ function StudyPage() {
             setRevealed(false);
             setSession({ correct: 0, total: 0 });
           }}
-          className="flex h-8 items-center gap-1 rounded border border-border px-2 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+          className="flex h-8 items-center gap-1 rounded border border-border/60 px-2 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
         >
           <RotateCcw className="h-3 w-3" /> Restart session
         </button>
@@ -183,7 +183,7 @@ function StudyPage() {
                 <button
                   disabled={record.isPending}
                   onClick={() => record.mutate(false)}
-                  className="flex items-center gap-1 rounded border border-border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent disabled:opacity-50"
+                  className="flex items-center gap-1 rounded border border-border/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent disabled:opacity-50"
                 >
                   <X className="h-3 w-3" /> Missed it
                 </button>
@@ -192,7 +192,7 @@ function StudyPage() {
           ) : (
             <button
               onClick={() => setRevealed(true)}
-              className="rounded border border-border bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+              className="rounded border border-border/60 bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
             >
               Reveal answer
             </button>

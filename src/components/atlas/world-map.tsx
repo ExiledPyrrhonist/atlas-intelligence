@@ -318,7 +318,7 @@ export function WorldMap({
 
       {hovered && (
         <div
-          className="pointer-events-none fixed z-50 -translate-y-full rounded-md border border-border bg-popover px-2.5 py-1.5 text-xs shadow-lg"
+          className="pointer-events-none fixed z-50 -translate-y-full rounded-xl border border-border/60 bg-popover px-2.5 py-1.5 text-xs shadow-lg"
           style={{ left: hovered.x + 12, top: hovered.y - 8 }}
         >
           <div className="font-medium">{hovered.name}</div>
@@ -341,27 +341,27 @@ export function WorldMap({
         <button
           onClick={() => zoomBy(1.6)}
           aria-label="Zoom in"
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-panel text-foreground hover:bg-accent"
+          className="flex h-8 w-8 items-center justify-center rounded-xl border border-border/60 bg-panel text-foreground hover:bg-accent"
         >
           <Plus className="h-4 w-4" />
         </button>
         <button
           onClick={() => zoomBy(1 / 1.6)}
           aria-label="Zoom out"
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-panel text-foreground hover:bg-accent"
+          className="flex h-8 w-8 items-center justify-center rounded-xl border border-border/60 bg-panel text-foreground hover:bg-accent"
         >
           <Minus className="h-4 w-4" />
         </button>
         <button
           onClick={resetZoom}
           aria-label="Reset view"
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-panel text-foreground hover:bg-accent"
+          className="flex h-8 w-8 items-center justify-center rounded-xl border border-border/60 bg-panel text-foreground hover:bg-accent"
         >
           <Crosshair className="h-4 w-4" />
         </button>
       </div>
 
-      <div className="pointer-events-none absolute bottom-4 left-4 rounded-md border border-border bg-panel/90 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground backdrop-blur">
+      <div className="pointer-events-none absolute bottom-4 left-4 rounded-xl border border-border/60 bg-panel/90 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground backdrop-blur">
         <div className="mb-1 text-foreground">political violence risk</div>
         {RISK_LEVELS.map((level) => (
           <div key={level} className="flex items-center gap-2">

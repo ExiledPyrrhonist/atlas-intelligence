@@ -115,7 +115,7 @@ function OrgProfile() {
                 key={m.countries.id}
                 to="/countries/$iso"
                 params={{ iso: m.countries.iso_a3 }}
-                className="rounded border border-border bg-secondary px-2 py-1 text-xs hover:border-primary/50"
+                className="rounded border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
               >
                 {m.countries.flag_emoji} {m.countries.name} · {m.membership_status}
               </Link>

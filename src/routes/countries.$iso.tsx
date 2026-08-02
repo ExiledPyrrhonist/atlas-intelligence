@@ -163,7 +163,7 @@ function CountryDossier() {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-1">
-            <span className="inline-flex items-center gap-1.5 rounded border border-border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em]">
+            <span className="inline-flex items-center gap-1.5 rounded border border-border/60 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em]">
               <span
                 className="inline-block h-2 w-2 rounded-sm"
                 style={{ background: riskFill(country.political_violence_risk) }}
@@ -286,7 +286,7 @@ function CountryDossier() {
               key={o!.id}
               to="/organizations/$id"
               params={{ id: o!.id }}
-              className="rounded border border-border bg-secondary px-2 py-1 text-xs hover:border-primary/50"
+              className="rounded border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
             >
               {o!.abbreviation || o!.name}
             </Link>
@@ -299,7 +299,7 @@ function CountryDossier() {
       <div className="flex justify-end">
         <Link
           to="/study"
-          className="rounded border border-border bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+          className="rounded border border-border/60 bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
         >
           Study these facts
         </Link>

@@ -78,7 +78,7 @@ function FieldForm({
         </button>
         <button
           onClick={onCancel}
-          className="flex items-center gap-1 rounded border border-border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+          className="flex items-center gap-1 rounded border border-border/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
         >
           <X className="h-3 w-3" /> Cancel
         </button>
@@ -186,7 +186,7 @@ export function CollectionPanel<T extends AnyRow & { id: string }>({
               setDraft(buildDraft(fields));
               setAdding((v) => !v);
             }}
-            className="flex items-center gap-1 rounded border border-border bg-secondary px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+            className="flex items-center gap-1 rounded border border-border/60 bg-secondary px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
           >
             <Plus className="h-3 w-3" /> {adding ? "Cancel" : addLabel}
           </button>

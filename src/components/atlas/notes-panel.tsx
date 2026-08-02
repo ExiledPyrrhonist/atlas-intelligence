@@ -51,7 +51,7 @@ export function NotesPanel({
             <h3 className="text-sm font-medium">{n.title}</h3>
             <ImportanceBadge level={String(n.importance)} />
             <ConfidenceBadge level={String(n.confidence)} />
-            <span className="rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+            <span className="rounded-sm border border-border/60 bg-secondary px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
               {String(n.category ?? "general")}
             </span>
           </div>
