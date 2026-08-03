@@ -26,7 +26,7 @@ function MapPage() {
   const { data: countries = [] } = useQuery(countriesQuery);
 
   return (
-    <div className="relative h-[calc(100vh-3.25rem)]">
+    <div className="relative h-full overflow-hidden">
       <div className="pointer-events-none absolute left-4 top-4 z-10 max-w-xs">
         <h1 className="text-lg font-semibold tracking-tight text-foreground">
           Global Situation Map
