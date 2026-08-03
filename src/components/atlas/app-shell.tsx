@@ -163,7 +163,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col h-screen overflow-hidden">
         <header className="sticky top-0 z-40 flex flex-wrap items-center gap-3 border-b border-border/60 bg-background/85 px-5 py-3 backdrop-blur-md">
           <Link to="/" className="flex items-center gap-2 lg:hidden">
             <Globe2 className="h-5 w-5 text-primary" />
@@ -189,7 +189,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </nav>
 
 
-        <main className="min-w-0 flex-1">{children}</main>
+        <main className="min-w-0 flex-1 overflow-auto">{children}</main>
       </div>
     </div>
   );
