@@ -142,7 +142,7 @@ export const statisticsQuery = {
   queryFn: async () => {
     const { data, error } = await supabase
       .from("statistics")
-      .select("*, countries(name, iso_a3, flag_emoji), sources(title, publisher, reliability)")
+      .select("*, countries(name, iso_a3, flag_emoji, region), sources(title, publisher, reliability)")
       .order("category");
     if (error) throw error;
     return data ?? [];
