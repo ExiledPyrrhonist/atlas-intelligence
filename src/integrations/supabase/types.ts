@@ -594,11 +594,18 @@ export type Database = {
           body: string
           category: string
           confidence: Database["public"]["Enums"]["confidence_level"]
+          country_id: string | null
           created_at: string
           entity_id: string | null
           entity_type: string
+          event_id: string | null
+          figure_id: string | null
           id: string
           importance: Database["public"]["Enums"]["importance_level"]
+          organization_id: string | null
+          region: string
+          source_id: string | null
+          summary: string
           tags: string[]
           title: string
           updated_at: string
@@ -607,11 +614,18 @@ export type Database = {
           body?: string
           category?: string
           confidence?: Database["public"]["Enums"]["confidence_level"]
+          country_id?: string | null
           created_at?: string
           entity_id?: string | null
           entity_type: string
+          event_id?: string | null
+          figure_id?: string | null
           id?: string
           importance?: Database["public"]["Enums"]["importance_level"]
+          organization_id?: string | null
+          region?: string
+          source_id?: string | null
+          summary?: string
           tags?: string[]
           title: string
           updated_at?: string
@@ -620,16 +634,59 @@ export type Database = {
           body?: string
           category?: string
           confidence?: Database["public"]["Enums"]["confidence_level"]
+          country_id?: string | null
           created_at?: string
           entity_id?: string | null
           entity_type?: string
+          event_id?: string | null
+          figure_id?: string | null
           id?: string
           importance?: Database["public"]["Enums"]["importance_level"]
+          organization_id?: string | null
+          region?: string
+          source_id?: string | null
+          summary?: string
           tags?: string[]
           title?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "research_notes_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "research_notes_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "political_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "research_notes_figure_id_fkey"
+            columns: ["figure_id"]
+            isOneToOne: false
+            referencedRelation: "political_figures"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "research_notes_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "research_notes_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "sources"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sources: {
         Row: {
@@ -686,6 +743,7 @@ export type Database = {
           name: string
           source_id: string | null
           unit: string
+          updated_at: string
           value: number
           why_this_matters: string
           year: number
@@ -699,6 +757,7 @@ export type Database = {
           name: string
           source_id?: string | null
           unit?: string
+          updated_at?: string
           value?: number
           why_this_matters?: string
           year: number
@@ -712,6 +771,7 @@ export type Database = {
           name?: string
           source_id?: string | null
           unit?: string
+          updated_at?: string
           value?: number
           why_this_matters?: string
           year?: number
