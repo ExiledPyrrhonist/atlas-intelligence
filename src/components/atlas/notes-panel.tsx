@@ -2,11 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { notesQuery, formatDate } from "@/lib/atlas";
 import { ImportanceBadge, ConfidenceBadge, TagList } from "./primitives";
 import { CollectionPanel } from "./collection-panel";
+import { NOTE_CATEGORIES } from "@/lib/atlas";
 import type { FieldSpec } from "./record-editor";
 
 const NOTE_FIELDS: FieldSpec[] = [
   { key: "title", label: "Title" },
-  { key: "category", label: "Category" },
+  {
+    key: "category",
+    label: "Category",
+    type: "select",
+    options: NOTE_CATEGORIES,
+    defaultValue: "Politics",
+  },
   {
     key: "importance",
     label: "Importance",
@@ -22,7 +29,8 @@ const NOTE_FIELDS: FieldSpec[] = [
     defaultValue: "likely",
   },
   { key: "tags", label: "Tags (comma separated)", type: "tags" },
-  { key: "body", label: "Main text", type: "textarea" },
+  { key: "summary", label: "Summary", type: "textarea" },
+  { key: "body", label: "Full note", type: "textarea" },
 ];
 
 export function NotesPanel({
@@ -55,6 +63,9 @@ export function NotesPanel({
               {String(n.category ?? "general")}
             </span>
           </div>
+          {n.summary ? (
+            <p className="mt-1.5 text-sm text-foreground/85">{String(n.summary)}</p>
+          ) : null}
           {n.body ? (
             <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-foreground/85">
               {String(n.body)}

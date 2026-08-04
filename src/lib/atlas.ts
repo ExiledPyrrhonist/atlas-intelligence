@@ -142,7 +142,7 @@ export const statisticsQuery = {
   queryFn: async () => {
     const { data, error } = await supabase
       .from("statistics")
-      .select("*, countries(name, iso_a3, flag_emoji), sources(title, publisher, reliability)")
+      .select("*, countries(name, iso_a3, flag_emoji, region), sources(title, publisher, reliability)")
       .order("category");
     if (error) throw error;
     return data ?? [];
@@ -173,17 +173,46 @@ export const reviewsQuery = {
   },
 };
 
+export const NOTE_CATEGORIES = [
+  "Politics",
+  "Government",
+  "Elections",
+  "Political Violence",
+  "Conflict",
+  "Economy",
+  "Military",
+  "Human Rights",
+  "Foreign Policy",
+  "Society",
+  "Demographics",
+  "Energy",
+] as const;
+
+export type NoteRow = ResearchNote & {
+  countries?: { name: string; iso_a3: string; flag_emoji: string; region: string } | null;
+  political_figures?: { name: string } | null;
+  organizations?: { name: string } | null;
+  political_events?: { name: string } | null;
+  sources?: { title: string } | null;
+};
+
 export const notesQuery = (entityType?: string, entityId?: string) => ({
   queryKey: ["research_notes", entityType ?? "all", entityId ?? "all"],
-  queryFn: async (): Promise<ResearchNote[]> => {
-    let q = supabase.from("research_notes").select("*").order("updated_at", { ascending: false });
+  queryFn: async (): Promise<NoteRow[]> => {
+    let q = supabase
+      .from("research_notes")
+      .select(
+        "*, countries(name, iso_a3, flag_emoji, region), political_figures(name), organizations(name), political_events(name), sources(title)",
+      )
+      .order("updated_at", { ascending: false });
     if (entityType) q = q.eq("entity_type", entityType);
     if (entityId) q = q.eq("entity_id", entityId);
     const { data, error } = await q;
     if (error) throw error;
-    return data ?? [];
+    return (data ?? []) as unknown as NoteRow[];
   },
 });
+
 
 export const countryDossierQuery = (countryId: string) => ({
   queryKey: ["dossier", countryId],
