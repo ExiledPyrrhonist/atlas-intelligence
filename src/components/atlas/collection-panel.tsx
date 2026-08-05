@@ -200,7 +200,7 @@ export function CollectionPanel<T extends AnyRow & { id: string }>({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={`Search ${title.toLowerCase()}…`}
-            className="h-8 w-full rounded-lg border border-input bg-background pl-7 pr-2 text-xs"
+            className="h-9 w-full rounded-lg border border-input bg-background pl-8 pr-2.5 text-[13px]"
           />
         </div>
       ) : null}

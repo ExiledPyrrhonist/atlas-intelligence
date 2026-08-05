@@ -16,7 +16,7 @@ function FilterSelect({ filter }: { filter: SelectFilter }) {
       <select
         value={filter.value}
         onChange={(e) => filter.onChange(e.target.value)}
-        className="h-8 w-full rounded-lg border border-input bg-background px-2 text-xs"
+        className="h-9 w-full rounded-lg border border-input bg-background px-2.5 text-[13px]"
       >
         {filter.options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -63,7 +63,7 @@ export function FilterBar({
               value={search}
               onChange={(e) => onSearch(e.target.value)}
               placeholder={placeholder}
-              className="h-8 w-full rounded-lg border border-input bg-background pl-7 pr-2 text-xs"
+              className="h-9 w-full rounded-lg border border-input bg-background pl-8 pr-2.5 text-[13px]"
             />
           </span>
         </label>
@@ -77,7 +77,7 @@ export function FilterBar({
         {advanced ? (
           <button
             onClick={() => setOpen((v) => !v)}
-            className="flex h-8 items-center gap-1.5 rounded-lg border border-border/60 bg-secondary px-2.5 text-xs hover:bg-accent"
+            className="flex h-9 items-center gap-1.5 rounded-lg border border-border/60 bg-secondary px-3 text-[13px] font-medium hover:bg-accent"
           >
             <SlidersHorizontal className="h-3.5 w-3.5" />
             {open ? "Hide filters" : "More filters"}
