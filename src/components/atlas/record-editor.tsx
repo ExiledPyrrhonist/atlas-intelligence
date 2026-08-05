@@ -103,7 +103,7 @@ export function EditableInput({
   value: string;
   onChange: (v: string) => void;
 }) {
-  const base = "w-full rounded border border-input bg-background px-2 py-1.5 text-sm";
+  const base = "w-full rounded-lg border border-input bg-background px-2 py-1.5 text-sm";
   if (spec.type === "select") {
     return (
       <select className={base} value={value} onChange={(e) => onChange(e.target.value)}>
@@ -195,14 +195,14 @@ export function RecordEditor({
             <div className="flex gap-1">
               <button
                 onClick={() => setEditing(false)}
-                className="flex items-center gap-1 rounded border border-border/60 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+                className="flex items-center gap-1 rounded-lg border border-border/60 px-2 py-1 text-xs font-semibold uppercase tracking-[0.08em] hover:bg-accent"
               >
                 <X className="h-3 w-3" /> Cancel
               </button>
               <button
                 disabled={save.isPending}
                 onClick={() => save.mutate()}
-                className="flex items-center gap-1 rounded bg-primary px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-primary-foreground disabled:opacity-50"
+                className="flex items-center gap-1 rounded-lg bg-primary px-2 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-primary-foreground disabled:opacity-50"
               >
                 <Check className="h-3 w-3" /> {save.isPending ? "Saving…" : "Save"}
               </button>
@@ -210,7 +210,7 @@ export function RecordEditor({
           ) : (
             <button
               onClick={start}
-              className="flex items-center gap-1 rounded border border-border/60 bg-secondary px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+              className="flex items-center gap-1 rounded-lg border border-border/60 bg-secondary px-2 py-1 text-xs font-semibold uppercase tracking-[0.08em] hover:bg-accent"
             >
               <Pencil className="h-3 w-3" /> Edit
             </button>

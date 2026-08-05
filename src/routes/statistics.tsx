@@ -224,7 +224,7 @@ function StatisticsPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
       <header>
         <h1 className="text-2xl font-semibold">Statistics</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -265,12 +265,12 @@ function StatisticsPage() {
                 <span className="font-mono text-sm text-primary">
                   {formatNumber(Number(row["value"] ?? 0))} {String(row["unit"] ?? "")}
                 </span>
-                <span className="rounded-full border border-border/60 bg-secondary px-2 py-0.5 text-[11px] text-muted-foreground">
+                <span className="rounded-full border border-border/60 bg-secondary px-2 py-0.5 text-[12.5px] text-muted-foreground">
                   {String(row["category"] ?? "")}
                 </span>
-                <span className="text-[11px] text-muted-foreground">{String(row["year"] ?? "")}</span>
+                <span className="text-[12.5px] text-muted-foreground">{String(row["year"] ?? "")}</span>
               </div>
-              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12.5px] text-muted-foreground">
                 {row.countries ? (
                   <Link
                     to="/countries/$iso"
@@ -289,7 +289,7 @@ function StatisticsPage() {
                 </span>
               </div>
               {row["methodology"] ? (
-                <p className="mt-1 line-clamp-2 whitespace-pre-line text-xs text-muted-foreground">
+                <p className="mt-1 line-clamp-2 whitespace-pre-line text-[13px] text-muted-foreground">
                   {String(row["methodology"])}
                 </p>
               ) : null}

@@ -129,7 +129,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2.5">
             <Globe2 className="h-5 w-5 text-primary" />
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
+              <div className="text-[12.5px] font-semibold uppercase tracking-[0.16em] text-primary">
                 Atlas
               </div>
               <div className="text-sm font-semibold leading-tight">Political Intelligence</div>
@@ -159,7 +159,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </nav>
         <div className="px-5 py-4">
           <div className="label-hud">Classification</div>
-          <div className="mt-1 font-mono text-[11px] text-signal">OSINT / UNCLASSIFIED</div>
+          <div className="mt-1 text-[12.5px] text-signal">OSINT / UNCLASSIFIED</div>
         </div>
       </aside>
 
@@ -170,7 +170,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="text-xs font-semibold uppercase tracking-[0.16em]">Atlas</span>
           </Link>
           <GlobalSearch />
-          <div className="ml-auto hidden font-mono text-[11px] text-muted-foreground md:block">
+          <div className="ml-auto hidden text-[12.5px] text-muted-foreground md:block">
             {new Date().toISOString().slice(0, 10)} · analyst workspace
           </div>
         </header>
@@ -180,7 +180,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Link
               key={to}
               to={to}
-              className="whitespace-nowrap rounded-lg px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
+              className="whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] text-muted-foreground hover:bg-accent hover:text-foreground"
               activeProps={{ className: "bg-accent text-foreground" }}
             >
               {label}

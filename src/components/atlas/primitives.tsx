@@ -5,7 +5,7 @@ function Chip({ className, children }: { className?: string; children: React.Rea
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.08em]",
+        "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[12.5px] font-semibold uppercase tracking-[0.08em]",
         className,
       )}
     >
@@ -34,7 +34,7 @@ export function TagList({ tags }: { tags: string[] }) {
       {tags.map((t) => (
         <span
           key={t}
-          className="rounded-full bg-secondary px-2.5 py-0.5 text-[11.5px] text-muted-foreground"
+          className="rounded-full bg-secondary px-2.5 py-0.5 text-[12.5px] text-muted-foreground"
         >
           #{t}
         </span>

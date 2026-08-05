@@ -236,7 +236,7 @@ function NotesPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
       <header>
         <h1 className="text-2xl font-semibold">Research notes</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -331,19 +331,19 @@ function NotesPage() {
                 <h2 className="text-sm font-medium">{row.title}</h2>
                 <ImportanceBadge level={String(row.importance)} />
                 <ConfidenceBadge level={String(row.confidence)} />
-                <span className="rounded-full border border-border/60 bg-secondary px-2 py-0.5 text-[11px] text-muted-foreground">
+                <span className="rounded-full border border-border/60 bg-secondary px-2 py-0.5 text-[12.5px] text-muted-foreground">
                   {row.category || "General"}
                 </span>
                 {row.countries ? (
                   <Link
                     to="/countries/$iso"
                     params={{ iso: row.countries.iso_a3 }}
-                    className="text-[11px] text-primary hover:underline"
+                    className="text-[12.5px] text-primary hover:underline"
                   >
                     {row.countries.flag_emoji} {row.countries.name}
                   </Link>
                 ) : row.region ? (
-                  <span className="text-[11px] text-muted-foreground">{row.region}</span>
+                  <span className="text-[12.5px] text-muted-foreground">{row.region}</span>
                 ) : null}
               </div>
 
@@ -357,7 +357,7 @@ function NotesPage() {
               ) : null}
 
               {row.political_figures || row.organizations || row.political_events || row.sources ? (
-                <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+                <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12.5px] text-muted-foreground">
                   {row.political_figures ? <span>person: {row.political_figures.name}</span> : null}
                   {row.organizations ? <span>org: {row.organizations.name}</span> : null}
                   {row.political_events ? <span>event: {row.political_events.name}</span> : null}
@@ -367,7 +367,7 @@ function NotesPage() {
 
               <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                 <TagList tags={(row.tags as string[]) ?? []} />
-                <span className="text-[11px] text-muted-foreground">
+                <span className="text-[12.5px] text-muted-foreground">
                   updated {formatDate(String(row.updated_at).slice(0, 10))}
                 </span>
               </div>

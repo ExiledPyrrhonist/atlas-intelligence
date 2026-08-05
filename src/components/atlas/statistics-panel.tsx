@@ -66,15 +66,15 @@ export function StatisticsPanel({ countryId }: { countryId: string }) {
             <span className="font-mono text-sm text-primary">
               {Number(s["value"] ?? 0).toLocaleString()} {String(s["unit"] ?? "")}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+            <span className="text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
               {String(s["category"] ?? "")} · {String(s["year"] ?? "")}
             </span>
           </div>
-          <div className="mt-1 text-xs text-muted-foreground">
+          <div className="mt-1 text-[13px] text-muted-foreground">
             source: {sourceTitle(s["source_id"])}
           </div>
           {s["methodology"] ? (
-            <p className="mt-1 whitespace-pre-line text-xs text-muted-foreground">
+            <p className="mt-1 whitespace-pre-line text-[13px] text-muted-foreground">
               {String(s["methodology"])}
             </p>
           ) : null}

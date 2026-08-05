@@ -60,7 +60,7 @@ function Stat({
         <Icon className="h-4 w-4 text-primary" />
       </div>
       <div className="mt-2 font-mono text-3xl">{value}</div>
-      {hint && <div className="mt-1 text-[11px] text-muted-foreground">{hint}</div>}
+      {hint && <div className="mt-1 text-[12.5px] text-muted-foreground">{hint}</div>}
     </div>
   );
 }
@@ -103,7 +103,7 @@ function Dashboard() {
   );
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-6 p-5 md:p-8">
       <header>
         <h1 className="text-xl font-semibold">Research Dashboard</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -152,7 +152,7 @@ function Dashboard() {
                   <span className="text-sm font-medium">{e.name}</span>
                   <ImportanceBadge level={e.importance} />
                 </div>
-                <div className="mt-1 font-mono text-[11px] text-muted-foreground">
+                <div className="mt-1 text-[12.5px] text-muted-foreground">
                   {e.location} · since {formatDate(e.event_date)}
                 </div>
               </Link>
@@ -177,7 +177,7 @@ function Dashboard() {
                 className="panel-surface block p-3 hover:border-primary/50"
               >
                 <div className="text-sm font-medium">{e.name}</div>
-                <div className="mt-1 font-mono text-[11px] text-signal">
+                <div className="mt-1 text-[12.5px] text-signal">
                   {formatDate(e.event_date)} · {e.location}
                 </div>
               </Link>
@@ -197,7 +197,7 @@ function Dashboard() {
                   <span>
                     {c.flag_emoji} {c.name}
                   </span>
-                  <span className="font-mono text-[11px] text-muted-foreground">
+                  <span className="text-[12.5px] text-muted-foreground">
                     {formatDate(c.last_updated.slice(0, 10))}
                   </span>
                 </Link>

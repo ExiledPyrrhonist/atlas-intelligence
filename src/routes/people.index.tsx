@@ -33,7 +33,7 @@ function PeopleIndex() {
   const byId = new Map(countries.map((c) => [c.id, c]));
 
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
       <header>
         <h1 className="text-2xl font-semibold">People</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -62,7 +62,7 @@ function PeopleIndex() {
                 </Link>
                 <ImportanceBadge level={String(f["importance"] ?? "low")} />
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-[13px] text-muted-foreground">
                 {String(f["position"] ?? "—")}
                 {f["party"] ? ` · ${String(f["party"])}` : ""}
               </div>
@@ -70,12 +70,12 @@ function PeopleIndex() {
                 <Link
                   to="/countries/$iso"
                   params={{ iso: country.iso_a3 }}
-                  className="mt-1 inline-block font-mono text-[11px] text-primary hover:underline"
+                  className="mt-1 inline-block text-[12.5px] text-primary hover:underline"
                 >
                   {country.flag_emoji} {country.name}
                 </Link>
               ) : (
-                <div className="mt-1 font-mono text-[11px] text-muted-foreground">
+                <div className="mt-1 text-[12.5px] text-muted-foreground">
                   No country linked
                 </div>
               )}

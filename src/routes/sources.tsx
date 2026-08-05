@@ -59,7 +59,7 @@ function SourcesPage() {
   const { data: sources = [] } = useQuery(sourcesQuery);
 
   return (
-    <div className="mx-auto max-w-5xl space-y-4 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
       <header>
         <h1 className="text-2xl font-semibold">Sources</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -77,7 +77,7 @@ function SourcesPage() {
         renderRow={(s) => (
           <div>
             <div className="text-sm font-medium">{String(s["title"] ?? "")}</div>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-[13px] text-muted-foreground">
               {String(s["publisher"] ?? "—")} · {String(s["source_type"] ?? "")} · reliability{" "}
               {String(s["reliability"] ?? "")}
             </div>
@@ -91,7 +91,7 @@ function SourcesPage() {
                 {String(s["url"])}
               </a>
             ) : null}
-            <div className="mt-1 font-mono text-[10px] text-muted-foreground">
+            <div className="mt-1 text-[12px] font-medium text-muted-foreground">
               published {formatDate((s["published_date"] as string) ?? null)} · accessed{" "}
               {formatDate((s["accessed_date"] as string) ?? null)}
             </div>

@@ -72,13 +72,13 @@ function FieldForm({
         <button
           disabled={saving}
           onClick={onSave}
-          className="flex items-center gap-1 rounded bg-primary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-primary-foreground disabled:opacity-50"
+          className="flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-primary-foreground disabled:opacity-50"
         >
           <Check className="h-3 w-3" /> {saving ? "Saving…" : "Save"}
         </button>
         <button
           onClick={onCancel}
-          className="flex items-center gap-1 rounded border border-border/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+          className="flex items-center gap-1 rounded-lg border border-border/60 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] hover:bg-accent"
         >
           <X className="h-3 w-3" /> Cancel
         </button>
@@ -186,7 +186,7 @@ export function CollectionPanel<T extends AnyRow & { id: string }>({
               setDraft(buildDraft(fields));
               setAdding((v) => !v);
             }}
-            className="flex items-center gap-1 rounded border border-border/60 bg-secondary px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+            className="flex items-center gap-1 rounded-lg border border-border/60 bg-secondary px-2 py-1 text-xs font-semibold uppercase tracking-[0.08em] hover:bg-accent"
           >
             <Plus className="h-3 w-3" /> {adding ? "Cancel" : addLabel}
           </button>
@@ -200,7 +200,7 @@ export function CollectionPanel<T extends AnyRow & { id: string }>({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={`Search ${title.toLowerCase()}…`}
-            className="h-8 w-full rounded border border-input bg-background pl-7 pr-2 text-xs"
+            className="h-8 w-full rounded-lg border border-input bg-background pl-7 pr-2 text-xs"
           />
         </div>
       ) : null}

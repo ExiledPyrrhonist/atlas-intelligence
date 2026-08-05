@@ -322,14 +322,14 @@ export function WorldMap({
           style={{ left: hovered.x + 12, top: hovered.y - 8 }}
         >
           <div className="font-semibold">{hovered.name}</div>
-          <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
+          <div className="mt-0.5 flex items-center gap-1.5 text-[13px] text-muted-foreground">
             <span
               className="inline-block h-2 w-2 rounded-sm"
               style={{ background: riskFill(hovered.risk) }}
             />
             {hovered.risk ? RISK_LABEL[hovered.risk] : "No risk data"}
           </div>
-          <div className="mt-0.5 text-xs text-muted-foreground">
+          <div className="mt-0.5 text-[13px] text-muted-foreground">
             {hovered.tracked
               ? `${hovered.population ? `Population ${formatCompact(hovered.population)} · ` : ""}Click to open profile`
               : "No database record"}
@@ -361,7 +361,7 @@ export function WorldMap({
         </button>
       </div>
 
-      <div className="pointer-events-none absolute bottom-4 left-4 rounded-xl border border-border/60 bg-panel/90 px-3 py-2 text-xs text-muted-foreground backdrop-blur">
+      <div className="pointer-events-none absolute bottom-4 left-4 rounded-xl border border-border/60 bg-panel/90 px-3 py-2 text-[13px] text-muted-foreground backdrop-blur">
         <div className="mb-1.5 font-semibold text-foreground">Political violence risk</div>
         {RISK_LEVELS.map((level) => (
           <div key={level} className="flex items-center gap-2">

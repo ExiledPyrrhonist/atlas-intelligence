@@ -87,7 +87,7 @@ export function FilterBar({
 
       {open && advanced ? <div className="border-t border-border/50 pt-3">{advanced}</div> : null}
 
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
+      <div className="flex items-center justify-between text-[13px] text-muted-foreground">
         <span>{resultCount} matching records</span>
         {onReset ? (
           <button onClick={onReset} className="hover:text-foreground">

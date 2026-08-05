@@ -27,7 +27,7 @@ function FactsPage() {
   const countryField = useCountryField();
 
   return (
-    <div className="mx-auto max-w-5xl space-y-4 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold">Facts</h1>
@@ -38,7 +38,7 @@ function FactsPage() {
         </div>
         <Link
           to="/study"
-          className="rounded border border-border/60 bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+          className="rounded-lg border border-border/60 bg-secondary px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] hover:bg-accent"
         >
           Start study session
         </Link>
@@ -61,7 +61,7 @@ function FactsPage() {
               <p className="mt-1 whitespace-pre-line text-sm text-foreground/80">
                 {String(c["answer"] ?? "")}
               </p>
-              <div className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+              <div className="mt-1 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                 <span>
                   {String(c["category"] ?? "general")} · {String(c["difficulty"] ?? "medium")}
                 </span>

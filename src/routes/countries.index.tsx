@@ -74,7 +74,7 @@ function CountriesIndex() {
   }, [countries, term, region, sort]);
 
   return (
-    <div className="mx-auto max-w-7xl space-y-4 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-xl font-semibold">Countries</h1>
@@ -144,12 +144,12 @@ function CountriesIndex() {
                     <span>{c.flag_emoji}</span>
                     {c.name}
                     {c.current_conflicts.length > 0 && (
-                      <span className="rounded-sm border border-critical/50 bg-critical/12 px-1 font-mono text-[10px] uppercase text-critical">
+                      <span className="rounded-sm border border-critical/50 bg-critical/12 px-1 text-[12px] font-medium uppercase text-critical">
                         conflict
                       </span>
                     )}
                   </Link>
-                  <div className="text-[11px] text-muted-foreground">{c.capital}</div>
+                  <div className="text-[12.5px] text-muted-foreground">{c.capital}</div>
                 </td>
                 <td className="px-3 py-2 text-muted-foreground">{c.region}</td>
                 <td className="max-w-[220px] truncate px-3 py-2 text-muted-foreground">

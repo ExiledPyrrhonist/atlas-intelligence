@@ -147,7 +147,7 @@ function CountryDossier() {
     );
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-6 p-5 md:p-8">
       <header className="panel-surface p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -163,7 +163,7 @@ function CountryDossier() {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-1">
-            <span className="inline-flex items-center gap-1.5 rounded border border-border/60 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em]">
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-border/60 px-2 py-1 text-xs font-semibold uppercase tracking-[0.08em]">
               <span
                 className="inline-block h-2 w-2 rounded-sm"
                 style={{ background: riskFill(country.political_violence_risk) }}
@@ -178,7 +178,7 @@ function CountryDossier() {
         </div>
         <div className="mt-4 flex items-center justify-between gap-3">
           <TagList tags={country.tags} />
-          <span className="font-mono text-[10px] text-muted-foreground">
+          <span className="text-[12px] font-medium text-muted-foreground">
             last updated {formatDate(country.last_updated.slice(0, 10))}
           </span>
         </div>
@@ -237,11 +237,11 @@ function CountryDossier() {
             >
               {String(f["name"] ?? "")}
             </Link>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-[13px] text-muted-foreground">
               {String(f["position"] ?? "—")}
               {f["party"] ? ` · ${String(f["party"])}` : ""}
             </div>
-            <div className="mt-1 font-mono text-[11px] text-muted-foreground">
+            <div className="mt-1 text-[12.5px] text-muted-foreground">
               {String(f["ideology"] ?? "")}
             </div>
           </div>
@@ -263,7 +263,7 @@ function CountryDossier() {
             >
               <div>
                 <div className="text-sm font-medium">{event!.name}</div>
-                <div className="font-mono text-[11px] text-muted-foreground">
+                <div className="text-[12.5px] text-muted-foreground">
                   {formatDate(event!.event_date)} · role: {role}
                 </div>
               </div>
@@ -286,7 +286,7 @@ function CountryDossier() {
               key={o!.id}
               to="/organizations/$id"
               params={{ id: o!.id }}
-              className="rounded border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
+              className="rounded-lg border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
             >
               {o!.abbreviation || o!.name}
             </Link>
@@ -299,7 +299,7 @@ function CountryDossier() {
       <div className="flex justify-end">
         <Link
           to="/study"
-          className="rounded border border-border/60 bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+          className="rounded-lg border border-border/60 bg-secondary px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] hover:bg-accent"
         >
           Study these facts
         </Link>

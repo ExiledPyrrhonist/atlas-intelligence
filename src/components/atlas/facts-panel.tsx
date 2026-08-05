@@ -50,7 +50,7 @@ export function FactsPanel({
           <p className="mt-1 whitespace-pre-line text-sm text-foreground/80">
             {String(c["answer"] ?? "")}
           </p>
-          <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+          <div className="mt-1 text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
             {String(c["category"] ?? "general")} · {String(c["difficulty"] ?? "medium")}
           </div>
         </div>
