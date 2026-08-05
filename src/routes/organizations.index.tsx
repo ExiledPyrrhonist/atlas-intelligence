@@ -30,7 +30,7 @@ function OrganizationsIndex() {
   const { data: orgs = [] } = useQuery(organizationsQuery);
 
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
       <header>
         <h1 className="text-2xl font-semibold">Organizations</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -56,13 +56,13 @@ function OrganizationsIndex() {
                 {String(o["name"] ?? "")}
               </Link>
               {o["abbreviation"] ? (
-                <span className="font-mono text-[11px] text-primary">
+                <span className="text-[12.5px] text-primary">
                   {String(o["abbreviation"])}
                 </span>
               ) : null}
               <ImportanceBadge level={String(o["importance"] ?? "low")} />
             </div>
-            <div className="font-mono text-[11px] text-muted-foreground">
+            <div className="text-[12.5px] text-muted-foreground">
               {String(o["org_type"] ?? "—")} · HQ {String(o["headquarters"] ?? "—")} ·{" "}
               {String(o["member_count"] ?? 0)} members
             </div>

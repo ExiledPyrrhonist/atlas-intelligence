@@ -80,7 +80,7 @@ function FigureProfile() {
   const country = countries.find((c) => c.id === figure.country_id);
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-6 p-5 md:p-8">
       <header className="panel-surface p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -125,7 +125,7 @@ function FigureProfile() {
                 className="panel-surface block p-3 hover:border-primary/50"
               >
                 <div className="text-sm font-medium">{e.political_events.name}</div>
-                <div className="font-mono text-[11px] text-muted-foreground">
+                <div className="text-[12.5px] text-muted-foreground">
                   {formatDate(e.political_events.event_date)} · role: {e.role}
                 </div>
               </Link>

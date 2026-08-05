@@ -78,7 +78,7 @@ function OrgProfile() {
     );
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-6 p-5 md:p-8">
       <header className="panel-surface p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -115,7 +115,7 @@ function OrgProfile() {
                 key={m.countries.id}
                 to="/countries/$iso"
                 params={{ iso: m.countries.iso_a3 }}
-                className="rounded border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
+                className="rounded-lg border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
               >
                 {m.countries.flag_emoji} {m.countries.name} · {m.membership_status}
               </Link>

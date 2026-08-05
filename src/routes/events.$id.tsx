@@ -90,7 +90,7 @@ function EventDossier() {
     );
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-6 p-5 md:p-8">
       <header className="panel-surface p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -128,7 +128,7 @@ function EventDossier() {
                 key={c.countries.id}
                 to="/countries/$iso"
                 params={{ iso: c.countries.iso_a3 }}
-                className="rounded border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
+                className="rounded-lg border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
               >
                 {c.countries.flag_emoji} {c.countries.name} · {c.role}
               </Link>
@@ -149,7 +149,7 @@ function EventDossier() {
                 key={f.political_figures.id}
                 to="/people/$id"
                 params={{ id: f.political_figures.id }}
-                className="rounded border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
+                className="rounded-lg border border-border/60 bg-secondary px-2 py-1 text-xs hover:border-primary/50"
               >
                 {f.political_figures.name} · {f.role}
               </Link>

@@ -96,7 +96,7 @@ export function SourcesPanel({
       renderRow={(s) => (
         <div>
           <div className="text-sm font-medium">{String(s["title"] ?? "")}</div>
-          <div className="text-xs text-muted-foreground">
+          <div className="text-[13px] text-muted-foreground">
             {String(s["publisher"] ?? "—")} · {String(s["source_type"] ?? "")} · reliability{" "}
             {String(s["reliability"] ?? "")}
           </div>
@@ -110,12 +110,12 @@ export function SourcesPanel({
               {String(s["url"])}
             </a>
           ) : null}
-          <div className="mt-1 font-mono text-[10px] text-muted-foreground">
+          <div className="mt-1 text-[12px] font-medium text-muted-foreground">
             published {formatDate((s["published_date"] as string) ?? null)} · accessed{" "}
             {formatDate((s["accessed_date"] as string) ?? null)}
           </div>
           {s["notes"] ? (
-            <p className="mt-1 whitespace-pre-line text-xs text-muted-foreground">
+            <p className="mt-1 whitespace-pre-line text-[13px] text-muted-foreground">
               {String(s["notes"])}
             </p>
           ) : null}

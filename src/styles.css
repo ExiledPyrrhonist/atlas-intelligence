@@ -91,9 +91,9 @@
   --background: oklch(0.165 0.006 250);
   --foreground: oklch(0.95 0.004 250);
 
-  --card: oklch(0.208 0.006 250);
+  --card: oklch(0.215 0.006 250);
   --card-foreground: oklch(0.95 0.004 250);
-  --panel: oklch(0.196 0.006 250);
+  --panel: oklch(0.203 0.006 250);
   --panel-foreground: oklch(0.9 0.004 250);
 
   --popover: oklch(0.225 0.006 250);
@@ -106,7 +106,7 @@
   --secondary-foreground: oklch(0.92 0.004 250);
 
   --muted: oklch(0.24 0.006 250);
-  --muted-foreground: oklch(0.68 0.008 250);
+  --muted-foreground: oklch(0.735 0.009 250);
 
   --accent: oklch(0.27 0.007 250);
   --accent-foreground: oklch(0.96 0.004 250);
@@ -117,7 +117,7 @@
   --destructive: oklch(0.62 0.18 22);
   --destructive-foreground: oklch(0.97 0.005 240);
 
-  --border: oklch(0.265 0.006 250);
+  --border: oklch(0.285 0.006 250);
   --input: oklch(0.28 0.006 250);
   --ring: oklch(0.62 0.06 210);
   --grid: oklch(0.215 0.006 250);
@@ -170,8 +170,8 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-size: 0.9375rem;
-    line-height: 1.6;
+    font-size: 0.9688rem;
+    line-height: 1.62;
     letter-spacing: -0.005em;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -181,7 +181,7 @@
   h2,
   h3,
   h4 {
-    font-weight: 650;
+    font-weight: 660;
     letter-spacing: -0.018em;
     line-height: 1.25;
   }
@@ -209,9 +209,9 @@
 
 @utility label-hud {
   font-family: var(--font-sans);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.09em;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--color-muted-foreground);
 }
@@ -220,7 +220,7 @@
   background-color: var(--color-panel);
   border: 1px solid color-mix(in oklab, var(--color-border) 70%, transparent);
   border-radius: var(--radius-lg);
-  box-shadow: var(--elevation-1);
+  box-shadow: var(--elevation-2);
 }
 
 

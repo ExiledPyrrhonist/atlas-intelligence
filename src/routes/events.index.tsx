@@ -30,7 +30,7 @@ function EventsIndex() {
   const { data: events = [] } = useQuery(eventsQuery);
 
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
       <header>
         <h1 className="text-2xl font-semibold">Events</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -57,17 +57,17 @@ function EventsIndex() {
               </Link>
               <ImportanceBadge level={String(e["importance"] ?? "low")} />
               {e["is_ongoing"] ? (
-                <span className="rounded-sm border border-critical/50 bg-critical/12 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-critical">
+                <span className="rounded-sm border border-critical/50 bg-critical/12 px-1.5 py-0.5 text-xs font-semibold uppercase tracking-[0.08em] text-critical">
                   ongoing
                 </span>
               ) : null}
             </div>
-            <div className="font-mono text-[11px] text-muted-foreground">
+            <div className="text-[12.5px] text-muted-foreground">
               {formatDate(String(e["event_date"] ?? ""))} · {String(e["event_type"] ?? "")} ·{" "}
               {String(e["location"] ?? "—")}
             </div>
             {e["summary"] ? (
-              <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+              <p className="mt-1 line-clamp-2 text-[13px] text-muted-foreground">
                 {String(e["summary"])}
               </p>
             ) : null}

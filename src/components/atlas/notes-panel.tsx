@@ -59,7 +59,7 @@ export function NotesPanel({
             <h3 className="text-sm font-medium">{n.title}</h3>
             <ImportanceBadge level={String(n.importance)} />
             <ConfidenceBadge level={String(n.confidence)} />
-            <span className="rounded-sm border border-border/60 bg-secondary px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+            <span className="rounded-sm border border-border/60 bg-secondary px-1.5 py-0.5 text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
               {String(n.category ?? "general")}
             </span>
           </div>
@@ -73,7 +73,7 @@ export function NotesPanel({
           ) : null}
           <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
             <TagList tags={(n.tags as string[]) ?? []} />
-            <span className="font-mono text-[10px] text-muted-foreground">
+            <span className="text-[12px] font-medium text-muted-foreground">
               created {formatDate(String(n.created_at).slice(0, 10))} · edited{" "}
               {formatDate(String(n.updated_at).slice(0, 10))}
             </span>

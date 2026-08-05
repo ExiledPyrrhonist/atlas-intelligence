@@ -83,7 +83,7 @@ function StudyPage() {
   }, [reviews]);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-5 p-4 md:p-6">
+    <div className="mx-auto w-full max-w-4xl space-y-5 p-5 md:p-8">
       <header>
         <h1 className="text-2xl font-semibold">Study mode</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -113,7 +113,7 @@ function StudyPage() {
             setIndex(0);
             setRevealed(false);
           }}
-          className="h-8 rounded border border-input bg-background px-2 text-xs"
+          className="h-8 rounded-lg border border-input bg-background px-2 text-xs"
         >
           <option value="all">All categories</option>
           {categories.map((c) => (
@@ -129,7 +129,7 @@ function StudyPage() {
             setIndex(0);
             setRevealed(false);
           }}
-          className="h-8 rounded border border-input bg-background px-2 text-xs"
+          className="h-8 rounded-lg border border-input bg-background px-2 text-xs"
         >
           <option value="all">All difficulties</option>
           {["easy", "medium", "hard"].map((d) => (
@@ -144,7 +144,7 @@ function StudyPage() {
             setRevealed(false);
             setSession({ correct: 0, total: 0 });
           }}
-          className="flex h-8 items-center gap-1 rounded border border-border/60 px-2 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+          className="flex h-8 items-center gap-1 rounded-lg border border-border/60 px-2 text-xs font-semibold uppercase tracking-[0.08em] hover:bg-accent"
         >
           <RotateCcw className="h-3 w-3" /> Restart session
         </button>
@@ -176,14 +176,14 @@ function StudyPage() {
                 <button
                   disabled={record.isPending}
                   onClick={() => record.mutate(true)}
-                  className="flex items-center gap-1 rounded bg-primary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-primary-foreground disabled:opacity-50"
+                  className="flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-primary-foreground disabled:opacity-50"
                 >
                   <Check className="h-3 w-3" /> I knew it
                 </button>
                 <button
                   disabled={record.isPending}
                   onClick={() => record.mutate(false)}
-                  className="flex items-center gap-1 rounded border border-border/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent disabled:opacity-50"
+                  className="flex items-center gap-1 rounded-lg border border-border/60 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] hover:bg-accent disabled:opacity-50"
                 >
                   <X className="h-3 w-3" /> Missed it
                 </button>
@@ -192,7 +192,7 @@ function StudyPage() {
           ) : (
             <button
               onClick={() => setRevealed(true)}
-              className="rounded border border-border/60 bg-secondary px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-accent"
+              className="rounded-lg border border-border/60 bg-secondary px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] hover:bg-accent"
             >
               Reveal answer
             </button>
@@ -206,7 +206,7 @@ function StudyPage() {
           {reviews.slice(0, 8).map((r) => (
             <div
               key={r.id}
-              className="flex items-center justify-between rounded border border-border/60 px-3 py-1.5 font-mono text-[11px] text-muted-foreground"
+              className="flex items-center justify-between rounded-lg border border-border/60 px-3 py-1.5 text-[12.5px] text-muted-foreground"
             >
               <span>{new Date(r.reviewed_at).toLocaleString()}</span>
               <span className={r.correct ? "text-primary" : "text-destructive"}>
