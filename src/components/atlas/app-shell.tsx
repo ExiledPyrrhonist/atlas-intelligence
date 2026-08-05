@@ -180,7 +180,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Link
               key={to}
               to={to}
-              className="whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] text-muted-foreground hover:bg-accent hover:text-foreground"
+              className="whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
               activeProps={{ className: "bg-accent text-foreground" }}
             >
               {label}
