@@ -218,6 +218,7 @@ function EventsIndex() {
 
       <CollectionPanel
         table="political_events"
+      sourceEntityType="political_events"
         title="Political events"
         addLabel="Add event"
         rows={filtered as never[]}

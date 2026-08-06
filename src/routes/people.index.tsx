@@ -213,6 +213,7 @@ function PeopleIndex() {
 
       <CollectionPanel
         table="political_figures"
+      sourceEntityType="political_figures"
         title="Political figures"
         addLabel="Add person"
         rows={filtered as never[]}

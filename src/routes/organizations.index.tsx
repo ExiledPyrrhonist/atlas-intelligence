@@ -189,6 +189,7 @@ function OrganizationsIndex() {
 
       <CollectionPanel
         table="organizations"
+      sourceEntityType="organizations"
         title="Organizations"
         addLabel="Add organization"
         rows={filtered as never[]}

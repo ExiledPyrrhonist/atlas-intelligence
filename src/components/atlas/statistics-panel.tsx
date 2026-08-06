@@ -53,6 +53,7 @@ export function StatisticsPanel({ countryId }: { countryId: string }) {
   return (
     <CollectionPanel
       table="statistics"
+      sourceEntityType="statistics"
       title="Statistics"
       addLabel="Add statistic"
       rows={stats}

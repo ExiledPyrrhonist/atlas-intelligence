@@ -252,6 +252,7 @@ function StatisticsPage() {
 
       <CollectionPanel
         table="statistics"
+      sourceEntityType="statistics"
         title="All statistics"
         addLabel="Add statistic"
         rows={filtered as never[]}

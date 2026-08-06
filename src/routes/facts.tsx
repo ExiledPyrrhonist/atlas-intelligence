@@ -181,6 +181,7 @@ function FactsPage() {
 
       <CollectionPanel
         table="flashcards"
+      sourceEntityType="flashcards"
         title="Fact library"
         addLabel="Add fact"
         rows={filtered as never[]}
