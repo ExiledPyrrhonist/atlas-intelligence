@@ -228,7 +228,17 @@ export function RecordEditor({
         <div className="space-y-3">
           {fields.map((f) => (
             <div key={f.key}>
-              <div className="label-hud mb-1">{f.label}</div>
+              <div className="mb-1 flex items-center justify-between gap-2">
+                <div className="label-hud">{f.label}</div>
+                {!f.noSource && (
+                  <FieldSourceControl
+                    entityType={entityType}
+                    entityId={record.id}
+                    fieldKey={f.key}
+                    fieldLabel={f.label}
+                  />
+                )}
+              </div>
               <EditableInput
                 spec={f}
                 value={draft[f.key] ?? ""}
@@ -240,7 +250,21 @@ export function RecordEditor({
       ) : (
         <div>
           {fields.map((f) => (
-            <Field key={f.key} label={f.label} value={<ViewValue spec={f} value={record[f.key]} />} />
+            <Field
+              key={f.key}
+              label={f.label}
+              value={<ViewValue spec={f} value={record[f.key]} />}
+              action={
+                f.noSource ? null : (
+                  <FieldSourceControl
+                    entityType={entityType}
+                    entityId={record.id}
+                    fieldKey={f.key}
+                    fieldLabel={f.label}
+                  />
+                )
+              }
+            />
           ))}
         </div>
       )}
