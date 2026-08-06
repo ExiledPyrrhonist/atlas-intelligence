@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { updateRecord, parseCsv, parseLines, type AnyRow } from "@/lib/atlas-db";
 import { parseParties } from "@/lib/atlas";
 import { Field, SectionTitle, TagList, ListBlock } from "./primitives";
+import { FieldSourceControl } from "./source-picker";
 
 export type FieldType =
   | "text"
