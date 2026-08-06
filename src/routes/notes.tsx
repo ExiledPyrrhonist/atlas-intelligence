@@ -236,10 +236,10 @@ function NotesPage() {
   ];
 
   return (
-    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
+    <div className="mx-auto w-full max-w-[1500px] space-y-3 px-5 pb-8 pt-4 md:px-8 md:pt-5">
       <header>
-        <h1 className="text-2xl font-semibold">Research notes</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <h1 className="text-xl font-semibold tracking-tight">Research notes</h1>
+        <p className="mt-0.5 max-w-3xl text-[13px] text-muted-foreground">
           Structured notes across the atlas, linked to countries, people, organizations, events and
           sources.
         </p>

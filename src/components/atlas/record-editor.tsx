@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { updateRecord, parseCsv, parseLines, type AnyRow } from "@/lib/atlas-db";
 import { parseParties } from "@/lib/atlas";
 import { Field, SectionTitle, TagList, ListBlock } from "./primitives";
+import { FieldSourceControl } from "./source-picker";
 
 export type FieldType =
   | "text"
@@ -19,6 +20,8 @@ export type FieldType =
 export type FieldSpec = {
   key: string;
   label: string;
+  /** Set for workflow-only fields that should not carry a citation. */
+  noSource?: boolean;
   type?: FieldType;
   options?: readonly string[];
   optionLabels?: Record<string, string>;
@@ -154,13 +157,17 @@ export function RecordEditor({
   fields,
   title,
   className,
+  sourceEntityType,
 }: {
   table: string;
   record: AnyRow & { id: string };
   fields: FieldSpec[];
   title: string;
   className?: string;
+  /** Entity type used for field level source attribution (defaults to the table). */
+  sourceEntityType?: string;
 }) {
+  const entityType = sourceEntityType ?? table;
   const qc = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<Record<string, string>>({});
@@ -222,7 +229,17 @@ export function RecordEditor({
         <div className="space-y-3">
           {fields.map((f) => (
             <div key={f.key}>
-              <div className="label-hud mb-1">{f.label}</div>
+              <div className="mb-1 flex items-center justify-between gap-2">
+                <div className="label-hud">{f.label}</div>
+                {!f.noSource && (
+                  <FieldSourceControl
+                    entityType={entityType}
+                    entityId={record.id}
+                    fieldKey={f.key}
+                    fieldLabel={f.label}
+                  />
+                )}
+              </div>
               <EditableInput
                 spec={f}
                 value={draft[f.key] ?? ""}
@@ -234,7 +251,21 @@ export function RecordEditor({
       ) : (
         <div>
           {fields.map((f) => (
-            <Field key={f.key} label={f.label} value={<ViewValue spec={f} value={record[f.key]} />} />
+            <Field
+              key={f.key}
+              label={f.label}
+              value={<ViewValue spec={f} value={record[f.key]} />}
+              action={
+                f.noSource ? null : (
+                  <FieldSourceControl
+                    entityType={entityType}
+                    entityId={record.id}
+                    fieldKey={f.key}
+                    fieldLabel={f.label}
+                  />
+                )
+              }
+            />
           ))}
         </div>
       )}

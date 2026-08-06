@@ -147,11 +147,11 @@ function FactsPage() {
   ];
 
   return (
-    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
+    <div className="mx-auto w-full max-w-[1500px] space-y-3 px-5 pb-8 pt-4 md:px-8 md:pt-5">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold">Facts</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <h1 className="text-xl font-semibold tracking-tight">Facts</h1>
+          <p className="mt-0.5 max-w-3xl text-[13px] text-muted-foreground">
             The single fact library behind Study Mode. Facts added on a country dossier appear here
             too.
           </p>
@@ -181,6 +181,7 @@ function FactsPage() {
 
       <CollectionPanel
         table="flashcards"
+      sourceEntityType="flashcards"
         title="Fact library"
         addLabel="Add fact"
         rows={filtered as never[]}

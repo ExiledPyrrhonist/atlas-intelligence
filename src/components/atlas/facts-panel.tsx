@@ -38,6 +38,7 @@ export function FactsPanel({
   return (
     <CollectionPanel
       table="flashcards"
+      sourceEntityType="flashcards"
       title={title}
       addLabel="Add fact"
       rows={cards}

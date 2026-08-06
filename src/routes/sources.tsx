@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { sourcesQuery, countriesQuery, formatDate } from "@/lib/atlas";
@@ -43,6 +43,9 @@ const SOURCE_FIELDS: FieldSpec[] = [
 ];
 
 export const Route = createFileRoute("/sources")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    source: typeof search["source"] === "string" ? (search["source"] as string) : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Sources — Political Intelligence Atlas" },
@@ -77,6 +80,7 @@ function label(value: string): string {
 }
 
 function SourcesPage() {
+  const { source: highlightId } = Route.useSearch();
   const { data: sources = [] } = useQuery(sourcesQuery);
   const { data: countries = [] } = useQuery(countriesQuery);
   const { data: links = [] } = useQuery(sourceCountriesQuery);
@@ -132,6 +136,12 @@ function SourcesPage() {
       return String(b.created_at).localeCompare(String(a.created_at));
     });
   }, [sources, search, type, reliability, country, region, addedYear, sort, byId, countriesBySource]);
+
+  useEffect(() => {
+    if (!highlightId) return;
+    const el = document.getElementById(`record-${highlightId}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [highlightId, filtered]);
 
   const opt = (allLabel: string, items: { value: string; label: string }[]) => [
     { value: "all", label: allLabel },
@@ -203,10 +213,10 @@ function SourcesPage() {
   ];
 
   return (
-    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
+    <div className="mx-auto w-full max-w-[1500px] space-y-3 px-5 pb-8 pt-4 md:px-8 md:pt-5">
       <header>
-        <h1 className="text-2xl font-semibold">Sources</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <h1 className="text-xl font-semibold tracking-tight">Sources</h1>
+        <p className="mt-0.5 max-w-3xl text-[13px] text-muted-foreground">
           Central source library. Sources can be attached to any country, event or statistic.
         </p>
       </header>
@@ -233,6 +243,7 @@ function SourcesPage() {
         title="Source library"
         addLabel="Add source"
         rows={filtered as never[]}
+        highlightId={highlightId}
         fields={SOURCE_FIELDS}
         renderRow={(s) => (
           <div>
