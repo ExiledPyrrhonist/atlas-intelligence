@@ -19,6 +19,8 @@ export type FieldType =
 export type FieldSpec = {
   key: string;
   label: string;
+  /** Set for workflow-only fields that should not carry a citation. */
+  noSource?: boolean;
   type?: FieldType;
   options?: readonly string[];
   optionLabels?: Record<string, string>;
