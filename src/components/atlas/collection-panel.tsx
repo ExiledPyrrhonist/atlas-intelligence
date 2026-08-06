@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { insertRecord, updateRecord, deleteRecord, type AnyRow } from "@/lib/atlas-db";
 import { EditableInput, type FieldSpec } from "./record-editor";
 import { SectionTitle } from "./primitives";
+import { FieldSourceControl } from "./source-picker";
 
 function toInput(spec: FieldSpec, value: unknown): string {
   if (spec.type === "tags" || spec.type === "list") {
@@ -43,6 +44,8 @@ function FieldForm({
   onCancel,
   onSave,
   saving,
+  entityType,
+  entityId,
 }: {
   fields: FieldSpec[];
   draft: Record<string, string>;
@@ -50,6 +53,8 @@ function FieldForm({
   onCancel: () => void;
   onSave: () => void;
   saving: boolean;
+  entityType?: string;
+  entityId?: string;
 }) {
   return (
     <div className="space-y-3">
@@ -59,7 +64,17 @@ function FieldForm({
             key={f.key}
             className={f.type === "textarea" || f.type === "list" ? "md:col-span-2" : undefined}
           >
-            <div className="label-hud mb-1">{f.label}</div>
+            <div className="mb-1 flex items-center justify-between gap-2">
+              <div className="label-hud">{f.label}</div>
+              {entityType && entityId && !f.noSource ? (
+                <FieldSourceControl
+                  entityType={entityType}
+                  entityId={entityId}
+                  fieldKey={f.key}
+                  fieldLabel={f.label}
+                />
+              ) : null}
+            </div>
             <EditableInput
               spec={f}
               value={draft[f.key] ?? ""}
@@ -104,6 +119,8 @@ export function CollectionPanel<T extends AnyRow & { id: string }>({
   onInsert,
   onDelete,
   deleteLabel = "Delete",
+  sourceEntityType,
+  highlightId,
 }: {
   table: string;
   title: string;
@@ -116,6 +133,10 @@ export function CollectionPanel<T extends AnyRow & { id: string }>({
   onInsert?: (values: AnyRow) => Promise<void>;
   onDelete?: (row: T) => Promise<void>;
   deleteLabel?: string;
+  /** Enables field level source attribution for the rows in this panel. */
+  sourceEntityType?: string;
+  /** Row rendered with a highlight ring (used when arriving from "View source"). */
+  highlightId?: string;
 }) {
   const qc = useQueryClient();
   const [adding, setAdding] = useState(false);
@@ -223,13 +244,23 @@ export function CollectionPanel<T extends AnyRow & { id: string }>({
           <p className="text-sm text-muted-foreground">No records yet.</p>
         )}
         {filtered.map((row) => (
-          <article key={row.id} className="panel-surface p-3">
+          <article
+            key={row.id}
+            id={`record-${row.id}`}
+            className={
+              highlightId === row.id
+                ? "panel-surface p-3 ring-2 ring-primary"
+                : "panel-surface p-3"
+            }
+          >
             {editingId === row.id ? (
               <FieldForm
                 fields={fields}
                 draft={draft}
                 setDraft={setDraft}
                 saving={update.isPending}
+                entityType={sourceEntityType}
+                entityId={row.id}
                 onCancel={() => setEditingId(null)}
                 onSave={() => update.mutate(row.id)}
               />
@@ -237,6 +268,14 @@ export function CollectionPanel<T extends AnyRow & { id: string }>({
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">{renderRow(row)}</div>
                 <div className="flex shrink-0 items-center gap-2">
+                  {sourceEntityType ? (
+                    <FieldSourceControl
+                      entityType={sourceEntityType}
+                      entityId={row.id}
+                      fieldKey="record"
+                      fieldLabel="Record"
+                    />
+                  ) : null}
                   <button
                     aria-label="Edit record"
                     onClick={() => {
