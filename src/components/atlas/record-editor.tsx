@@ -156,13 +156,17 @@ export function RecordEditor({
   fields,
   title,
   className,
+  sourceEntityType,
 }: {
   table: string;
   record: AnyRow & { id: string };
   fields: FieldSpec[];
   title: string;
   className?: string;
+  /** Entity type used for field level source attribution (defaults to the table). */
+  sourceEntityType?: string;
 }) {
+  const entityType = sourceEntityType ?? table;
   const qc = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<Record<string, string>>({});
