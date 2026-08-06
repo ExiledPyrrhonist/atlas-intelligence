@@ -83,10 +83,10 @@ function StudyPage() {
   }, [reviews]);
 
   return (
-    <div className="mx-auto w-full max-w-4xl space-y-5 p-5 md:p-8">
+    <div className="mx-auto w-full max-w-4xl space-y-3 px-5 pb-8 pt-4 md:px-8 md:pt-5">
       <header>
-        <h1 className="text-2xl font-semibold">Study mode</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <h1 className="text-xl font-semibold tracking-tight">Study mode</h1>
+        <p className="mt-0.5 max-w-3xl text-[13px] text-muted-foreground">
           Review the facts you have recorded in the atlas. Every answer is logged so accuracy is
           tracked over time.
         </p>

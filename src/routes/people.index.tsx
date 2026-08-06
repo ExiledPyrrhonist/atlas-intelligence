@@ -187,10 +187,10 @@ function PeopleIndex() {
   ];
 
   return (
-    <div className="mx-auto w-full max-w-[1500px] space-y-4 p-5 md:p-8">
+    <div className="mx-auto w-full max-w-[1500px] space-y-3 px-5 pb-8 pt-4 md:px-8 md:pt-5">
       <header>
-        <h1 className="text-2xl font-semibold">People</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <h1 className="text-xl font-semibold tracking-tight">People</h1>
+        <p className="mt-0.5 max-w-3xl text-[13px] text-muted-foreground">
           Every political figure in the database, linked to their country dossier.
         </p>
       </header>
