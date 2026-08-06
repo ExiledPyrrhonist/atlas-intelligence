@@ -43,10 +43,21 @@ export function TagList({ tags }: { tags: string[] }) {
   );
 }
 
-export function Field({ label, value }: { label: string; value: React.ReactNode }) {
+export function Field({
+  label,
+  value,
+  action,
+}: {
+  label: string;
+  value: React.ReactNode;
+  action?: React.ReactNode;
+}) {
   return (
     <div className="border-b border-border/40 py-2.5 last:border-0">
-      <div className="label-hud">{label}</div>
+      <div className="flex items-center justify-between gap-2">
+        <div className="label-hud">{label}</div>
+        {action}
+      </div>
       <div className="mt-1.5 text-sm leading-relaxed text-foreground">{value || "—"}</div>
     </div>
   );
